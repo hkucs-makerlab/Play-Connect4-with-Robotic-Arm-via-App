@@ -7,18 +7,28 @@
     tools:context=".MainActivity">
 
 
-    <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:orientation="vertical"
+    <Button
+        android:id="@+id/auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="316dp"
+        android:onClick="launchAutoActivity"
+        android:text="Auto Mode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <org.opencv.android.JavaCameraView
-            android:id="@+id/camera_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/manual"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Manual Mode"
+        android:onClick="launchManualActivity"
+        app:layout_constraintBottom_toTopOf="@+id/auto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.965" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
