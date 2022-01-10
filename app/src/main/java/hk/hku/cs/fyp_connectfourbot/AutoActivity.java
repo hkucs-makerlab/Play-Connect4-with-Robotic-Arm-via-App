@@ -1,131 +1,114 @@
 package hk.hku.cs.fyp_connectfourbot;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
+import android.media.Image;
 import android.util.Log;
-import android.view.SurfaceView;
+import android.view.TextureView;
+import android.view.ViewStub;
 
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.InstallCallbackInterface;
-import org.opencv.android.JavaCameraView;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
+import androidx.camera.core.ImageProxy;
 
-public class AutoActivity extends AppCompatActivity  implements CameraBridgeViewBase.CvCameraViewListener2 {
+import org.pytorch.IValue;
+import org.pytorch.LiteModuleLoader;
+import org.pytorch.Module;
+import org.pytorch.Tensor;
+import org.pytorch.torchvision.TensorImageUtils;
 
-    private static String TAG = "MainActivity";
-    JavaCameraView javaCameraView;
-    CameraBridgeViewBase cameraBridgeViewBase;
-    Mat mRGBA, mRGBAT, mGray, mGrayT;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
+public class AutoActivity extends AbstractCameraXActivity<AutoActivity.AnalysisResult> {
+    private Module mModule = null;
+    private CameraView mResultView;
 
-    BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback() {
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status) {
-                case BaseLoaderCallback.SUCCESS:{
+    static class AnalysisResult {
+        private final ArrayList<Result> mResults;
 
-                    cameraBridgeViewBase.enableView();
-                    break;
-                }
-                default: {
-                    super.onManagerConnected(status);
-                }
+        public AnalysisResult(ArrayList<Result> results) {
+            mResults = results;
+        }
+    }
+
+    @Override
+    protected int getContentViewLayoutId() {
+        return R.layout.activity_auto;
+    }
+
+    @Override
+    protected TextureView getCameraPreviewTextureView() {
+        mResultView = findViewById(R.id.resultView);
+        return ((ViewStub) findViewById(R.id.activity_auto_board_detection))
+                .inflate()
+                .findViewById(R.id.mat_view);
+    }
+
+    @Override
+    protected void applyToUiAnalyzeImageResult(AnalysisResult result) {
+        mResultView.setResults(result.mResults);
+        mResultView.invalidate();
+    }
+
+    private Bitmap imgToBitmap(Image image) {
+        Image.Plane[] planes = image.getPlanes();
+        ByteBuffer yBuffer = planes[0].getBuffer();
+        ByteBuffer uBuffer = planes[1].getBuffer();
+        ByteBuffer vBuffer = planes[2].getBuffer();
+
+        int ySize = yBuffer.remaining();
+        int uSize = uBuffer.remaining();
+        int vSize = vBuffer.remaining();
+
+        byte[] nv21 = new byte[ySize + uSize + vSize];
+        yBuffer.get(nv21, 0, ySize);
+        vBuffer.get(nv21, ySize, vSize);
+        uBuffer.get(nv21, ySize + vSize, uSize);
+
+        YuvImage yuvImage = new YuvImage(nv21, ImageFormat.NV21, image.getWidth(), image.getHeight(), null);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        yuvImage.compressToJpeg(new Rect(0, 0, yuvImage.getWidth(), yuvImage.getHeight()), 75, out);
+
+        byte[] imageBytes = out.toByteArray();
+        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+    }
+
+    @Override
+    @WorkerThread
+    @Nullable
+    protected AnalysisResult analyzeImage(ImageProxy image, int rotationDegrees) {
+        try {
+            if (mModule == null) {
+                mModule = LiteModuleLoader.load(MainActivity.assetFilePath(getApplicationContext(), "model.ptl"));
             }
-
+        } catch (IOException e) {
+            Log.e("Object Detection", "Error reading assets", e);
+            return null;
         }
+        Bitmap bitmap = imgToBitmap(image.getImage());
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90.0f);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, PrePostProcessor.mInputWidth, PrePostProcessor.mInputHeight, true);
 
-        @Override
-        public void onPackageInstall(int operation, InstallCallbackInterface callback) {
-            super.onPackageInstall(operation, callback);
-        }
-    };
+        final Tensor inputTensor = TensorImageUtils.bitmapToFloat32Tensor(resizedBitmap, PrePostProcessor.NO_MEAN_RGB, PrePostProcessor.NO_STD_RGB);
+        IValue[] outputTuple = mModule.forward(IValue.from(inputTensor)).toTuple();
+        final Tensor outputTensor = outputTuple[0].toTensor();
+        final float[] outputs = outputTensor.getDataAsFloatArray();
 
-    static {
-        if (OpenCVLoader.initDebug()){
-            Log.d(TAG, "OpenCV Config successful 1");
-        }
-        else {
-            Log.d(TAG, "OpenCV Config failed");
-        }
-    }
+        float imgScaleX = (float)bitmap.getWidth() / PrePostProcessor.mInputWidth;
+        float imgScaleY = (float)bitmap.getHeight() / PrePostProcessor.mInputHeight;
+        float ivScaleX = (float)mResultView.getWidth() / bitmap.getWidth();
+        float ivScaleY = (float)mResultView.getHeight() / bitmap.getHeight();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auto);
-
-        cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.camera_view);
-        cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
-        cameraBridgeViewBase.setCvCameraViewListener(AutoActivity.this);
-
-    }
-
-    @Override
-    public void onCameraViewStarted(int width, int height) {
-        //Get the width and height to be displayed on the screen
-        Log.d(TAG, "Width: "+Integer.toString(width));
-        Log.d(TAG, "Height: "+Integer.toString(height));
-        mRGBA = new Mat(height, width, CvType.CV_8UC4);
-        mGray = new Mat(height, width, CvType.CV_8UC1);
-    }
-
-    @Override
-    public void onCameraViewStopped() {
-        //Actions when the camera stop
-        mRGBA.release();
-        mGray.release();
-    }
-
-    @Override
-    public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        mRGBA = inputFrame.rgba();
-        mGray = inputFrame.gray();
-        mRGBAT = mRGBA.t();
-        Core.flip(mRGBA.t(), mRGBAT, 1);
-        Core.rotate(mRGBAT, mRGBAT, 2);
-        mGrayT = mGray.t();
-        Core.flip(mGray.t(), mGrayT, 1);
-        Core.rotate(mGrayT, mGrayT, 2);
-        Imgproc.resize(mRGBAT, mRGBAT, mRGBA.size()); //resize the image (src, dst, size)
-        Imgproc.resize(mGrayT, mGrayT, mGray.size()); //resize the image (src, dst, size)
-        return mRGBAT;
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (cameraBridgeViewBase != null){
-            cameraBridgeViewBase.disableView();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (OpenCVLoader.initDebug()){
-            Log.d(TAG, "OpenCV Config successful");
-            baseLoaderCallback.onManagerConnected(BaseLoaderCallback.SUCCESS);
-        }
-        else {
-            Log.d(TAG, "OpenCV Config failed");
-            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, baseLoaderCallback);
-        }
+        final ArrayList<Result> results = PrePostProcessor.outputsToNMSPredictions(outputs, imgScaleX, imgScaleY, ivScaleX, ivScaleY, 0, 0);
+        return new AnalysisResult(results);
     }
 }
