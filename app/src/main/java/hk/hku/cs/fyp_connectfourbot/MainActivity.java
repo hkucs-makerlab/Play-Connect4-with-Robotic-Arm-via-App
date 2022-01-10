@@ -26,9 +26,24 @@ public class MainActivity extends AppCompatActivity{
         startActivity(autoModeAct);
     }
 
+    public void launchControllerActivity(View view) {
+        Log.d(TAG, "Launch Controller Activity");
+        Intent controllerAct = new Intent(this, ControllerActivity.class);
+        startActivity(controllerAct);
+    }
+
     public void launchManualActivity(View view) {
         Log.d(TAG, "Launch Manual Activity");
-        Intent manualModeAct = new Intent(this, ManualActivity.class);
+        Intent manualModeAct = new Intent(this, ControllerActivity.class);
         startActivity(manualModeAct);
+    }
+
+    public void launchBuildingActivity(View view) {
+        Log.d(TAG, "Launch Building Activity");
+        Intent buildingModeAct = new Intent(this, BuildingActivity.class);
+        startActivity(buildingModeAct);
+    }
+
+    public void launchDrawingActivity(View view) {
     }
 }

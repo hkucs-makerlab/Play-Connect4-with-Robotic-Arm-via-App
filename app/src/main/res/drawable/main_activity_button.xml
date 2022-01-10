@@ -6,6 +6,6 @@
     <!--        android:width="2dp"-->
     <!--        android:color="@color/design_default_color_primary"/>-->
     <gradient android:startColor="@color/pink_200" android:endColor="@color/teal_200" android:type="linear" />
-    <corners android:radius="5dp" />
+    <corners android:radius="30dp" />
 
 </shape>

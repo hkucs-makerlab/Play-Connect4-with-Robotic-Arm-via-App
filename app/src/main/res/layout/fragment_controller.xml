@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ControllerFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:layout_constraintDimensionRatio="1:1">
+
+        <ImageButton
+            android:id="@+id/forwardButton"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/controller_button"
+            android:src="@drawable/ic_arrow_up"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/leftButton"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/controller_button"
+            android:rotation="-90"
+            android:src="@drawable/ic_arrow_up"
+            app:layout_constraintBottom_toBottomOf="@+id/backwardButton"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/forwardButton" />
+
+        <ImageButton
+            android:id="@+id/rightButton"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/controller_button"
+            android:rotation="90"
+            android:src="@drawable/ic_arrow_up"
+            app:layout_constraintBottom_toBottomOf="@+id/backwardButton"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/forwardButton" />
+
+        <ImageButton
+            android:id="@+id/backwardButton"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/controller_button"
+            android:rotation="180"
+            android:src="@drawable/ic_arrow_up"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forwardButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <android.widget.Button
+            android:id="@+id/upButton"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/controller_button"
+            android:text="Up"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.widget.Button
+            android:id="@+id/placeButton"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/controller_button"
+            android:text="Place"
+            app:layout_constraintBottom_toBottomOf="@+id/downButton"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/upButton" />
+
+        <android.widget.Button
+            android:id="@+id/pickButton"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/controller_button"
+            android:text="Pick"
+            app:layout_constraintBottom_toBottomOf="@+id/downButton"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/upButton" />
+
+        <android.widget.Button
+            android:id="@+id/downButton"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/controller_button"
+            android:text="Down"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

@@ -13,60 +13,60 @@
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
+        app:layout_constraintTop_toBottomOf="@+id/title2">
 
-        <Button
+        <android.widget.Button
             android:id="@+id/auto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
+            android:background="@drawable/main_activity_button"
             android:onClick="launchAutoActivity"
             android:text="Player VS AI Mode"
-            android:background="@drawable/main_activity_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/controller"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:onClick="launchManualActivity"
-            android:text="Arm Controller"
             android:background="@drawable/main_activity_button"
+            android:onClick="launchControllerActivity"
+            android:text="Arm Controller"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auto" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/draw"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:onClick="launchManualActivity"
-            android:text="Draw Mode"
             android:background="@drawable/main_activity_button"
+            android:onClick="launchDrawingActivity"
+            android:text="Drawing Mode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/controller" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/build"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:onClick="launchManualActivity"
-            android:text="Build Mode"
             android:background="@drawable/main_activity_button"
+            android:onClick="launchBuildingActivity"
+            android:text="Building Mode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/draw" />
@@ -75,7 +75,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Connect"
@@ -87,7 +87,7 @@
         app:layout_constraintVertical_bias="0.10" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="4"
