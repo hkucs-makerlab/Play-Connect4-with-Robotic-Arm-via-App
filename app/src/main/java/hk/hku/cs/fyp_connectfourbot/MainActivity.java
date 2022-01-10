@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     }
 
     public void launchBuildingActivity(View view) {
-        Log.d(TAG, "Launch Building Activity");
+//        Log.d(TAG, "Launch Building Activity");
         Intent buildingModeAct = new Intent(this, BuildingActivity.class);
         startActivity(buildingModeAct);
     }
@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     }
     
     public void launchControllerActivity(View view) {
-        Log.d(TAG, "Launch Controller Activity");
+//        Log.d(TAG, "Launch Controller Activity");
         Intent controllerAct = new Intent(this, ControllerActivity.class);
         startActivity(controllerAct);
     }
