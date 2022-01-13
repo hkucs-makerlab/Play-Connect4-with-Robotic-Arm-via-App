@@ -30,7 +30,7 @@
             android:id="@+id/leftButton"
             android:layout_width="70dp"
             android:layout_height="0dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/controller_button"
             android:rotation="-90"
             android:src="@drawable/ic_arrow_up"
@@ -43,7 +43,7 @@
             android:id="@+id/rightButton"
             android:layout_width="70dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/controller_button"
             android:rotation="90"
             android:src="@drawable/ic_arrow_up"
@@ -64,6 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/forwardButton" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -88,7 +89,7 @@
             android:id="@+id/placeButton"
             android:layout_width="70dp"
             android:layout_height="0dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/controller_button"
             android:text="Place"
             app:layout_constraintBottom_toBottomOf="@+id/downButton"
@@ -100,7 +101,7 @@
             android:id="@+id/pickButton"
             android:layout_width="70dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/controller_button"
             android:text="Pick"
             app:layout_constraintBottom_toBottomOf="@+id/downButton"

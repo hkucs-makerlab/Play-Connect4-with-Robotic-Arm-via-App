@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.Manifest;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,8 +24,14 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.makerlab.bt.BluetoothConnect;
+import com.makerlab.bt.BluetoothScan;
+import com.makerlab.ui.BluetoothDevListActivity;
 
 import org.pytorch.IValue;
 import org.pytorch.LiteModuleLoader;
@@ -54,7 +63,7 @@ import org.opencv.android.JavaCameraView;
 //
 //}
 
-public class MainActivity extends AppCompatActivity implements Runnable {
+public class MainActivity extends AppCompatActivity implements Runnable, BluetoothConnect.ConnectionHandler {
     private int mImageIndex = 0;
 //    private String[] mTestImages = {"test1.png", "test2.jpg", "test3.png"};
 
@@ -65,6 +74,26 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     private Bitmap mBitmap = null;
     private Module mModule = null;
     private float mImgScaleX, mImgScaleY, mIvScaleX, mIvScaleY, mStartX, mStartY;
+
+    //bluetooth variable
+    private ImageButton mBluetoothButton;
+    static public final boolean D = BuildConfig.DEBUG;
+    static public final int REQUEST_BT_GET_DEVICE = 1112;
+    static public final String BLUETOOTH_REMOTE_DEVICE = "bt_remote_device";
+    static private String LOG_TAG = MainActivity.class.getSimpleName();
+
+    private BluetoothConnect mBluetoothConnect;
+    private BluetoothScan mBluetoothScan;
+
+    private SharedPreferences mSharedPref;
+    private String mSharedPrefFile = "hk.hku.cs.fyp_connectfourbot";
+
+    private static final String FINISH_ACTIVITY_BROADCAST = BuildConfig.APPLICATION_ID + ".FINISH_ACTIVITY_BROADCAST";
+    private LocalBroadcastManager localBroadcastManager;
+    private static MainActivity instance;
+
+
+
 
     public static String assetFilePath(Context context, String assetName) throws IOException {
         File file = new File(context.getFilesDir(), assetName);
@@ -159,6 +188,40 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 //            }
 //        });
 
+        //bluetooth
+        mBluetoothButton = findViewById(R.id.bluetooth);
+
+        mBluetoothConnect = new BluetoothConnect(this);
+        mBluetoothConnect.setConnectionHandler(this);
+
+        mSharedPref = getSharedPreferences(mSharedPrefFile, MODE_PRIVATE);
+        String bluetothDeviceAddr = mSharedPref.getString(BLUETOOTH_REMOTE_DEVICE, null);
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        instance = this;
+
+        if (bluetothDeviceAddr != null) {
+            //Log.e(LOG_TAG, "onCreate(): found share perference");
+            mBluetoothScan = new BluetoothScan(this);
+            BluetoothDevice mBluetoothDevice = mBluetoothScan.getBluetoothDevice(bluetothDeviceAddr);
+            mBluetoothConnect.connectBluetooth(mBluetoothDevice);
+            if (D)
+                Log.e(LOG_TAG, "onCreate() - connecting bluetooth device");
+        } else {
+            if (D)
+                Log.e(LOG_TAG, "onCreate()");
+        }
+
+        if (mBluetoothConnect.isConnected()){ //if connected already
+            enableMainActivityButtons(true);
+            enableConnectButton(false);
+        }else {
+            //if bluetooth not connected
+            enableMainActivityButtons(false);
+            enableConnectButton(true);
+        }
+
+
         final Button buttonLive = findViewById(R.id.auto);
         buttonLive.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -242,7 +305,33 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                     break;
             }
         }
+
+        //bluetooth
+        if (requestCode == REQUEST_BT_GET_DEVICE) {
+            if (resultCode == RESULT_OK) {
+                BluetoothDevice bluetoothDevice = data.getParcelableExtra(BluetoothDevListActivity.EXTRA_KEY_DEVICE);
+                if (bluetoothDevice != null) {
+                    mBluetoothConnect.connectBluetooth(bluetoothDevice);
+                    if (D)
+                        Log.e(LOG_TAG, "onActivityResult() - connecting");
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                if (D)
+                    Log.e(LOG_TAG, "onActivityResult() - canceled");
+            }
+        }
     }
+
+    private void enableConnectButton(boolean flag) {
+        if (flag){
+            mBluetoothButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_bluetooth_24));
+            mBluetoothButton.setTag(R.drawable.ic_baseline_bluetooth_24);
+        } else{
+            mBluetoothButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_bluetooth_disabled_24));
+            mBluetoothButton.setTag(R.drawable.ic_baseline_bluetooth_disabled_24);
+        }
+    }
+
 
     @Override
     public void run() {
@@ -282,6 +371,8 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     }
 
     public void launchDrawingActivity(View view) {
+        Intent drawingAct = new Intent(this, DrawingActivity.class);
+        startActivity(drawingAct);
     }
     
     public void launchControllerActivity(View view) {
@@ -289,4 +380,138 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         Intent controllerAct = new Intent(this, ControllerActivity.class);
         startActivity(controllerAct);
     }
+
+    public void launchBluetoothActivity(View view) {
+//        if (mBluetoothButton.getDrawable() == getResources().getDrawable(R.drawable.ic_baseline_bluetooth_24)){
+//            Log.d(MainActivity.class.getSimpleName(), "it is a ic_baseline_bluetooth_24");
+//        }
+        if ((Integer)mBluetoothButton.getTag() == R.drawable.ic_baseline_bluetooth_24){ //click to connect bluetooth
+            Log.d(MainActivity.class.getSimpleName(), "it is a ic_baseline_bluetooth_24");
+
+            if (mBluetoothConnect.isConnected()) {
+                mBluetoothConnect.disconnectBluetooth();
+            }
+            Intent intent = new Intent(this, BluetoothDevListActivity.class);
+            startActivityForResult(intent, REQUEST_BT_GET_DEVICE);
+
+//            mBluetoothButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_bluetooth_disabled_24));
+//            mBluetoothButton.setTag(R.drawable.ic_baseline_bluetooth_disabled_24);
+
+        } else { //click to disconnect bluetooth
+            Log.d(MainActivity.class.getSimpleName(), "it is a ic_baseline_bluetooth_disabled_24");
+            mBluetoothConnect.disconnectBluetooth();
+//            closeControlFragment();
+            enableMainActivityButtons(false);
+            enableConnectButton(true);
+            removeSharePerf();
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBluetoothConnect.disconnectBluetooth();
+        if (D)
+            Log.e(LOG_TAG, "onDestroy()");
+    }
+
+    public BluetoothConnect getBluetoothConnect() {
+        return mBluetoothConnect;
+    }
+
+    @Override
+    public void onConnect(BluetoothConnect instant) {
+        runOnUiThread(new Thread() {
+            public void run() {
+                Toast.makeText(getApplicationContext(), "Connecting", Toast.LENGTH_SHORT).show();
+            }
+        });
+        if (D)
+            Log.e(LOG_TAG, "onConnect() - Connecting");
+    }
+
+    @Override
+    public void onConnectionSuccess(BluetoothConnect instant) {
+        SharedPreferences.Editor preferencesEditor = mSharedPref.edit();
+        preferencesEditor.putString(BLUETOOTH_REMOTE_DEVICE, mBluetoothConnect.getDeviceAddress());
+        preferencesEditor.apply();
+        if (D)
+            Log.e(LOG_TAG, "onConnectionSuccess() - connected");
+        runOnUiThread(new Thread() {
+            public void run() {
+                runOnUiThread(new Thread() {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+                        if (mBluetoothButton != null){
+                            enableMainActivityButtons(true);
+                            enableConnectButton(false);
+                        }
+//                        displayControlFragment();
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    public void onConnectionFail(BluetoothConnect instant) {
+        runOnUiThread(new Thread() {
+            public void run() {
+                Toast.makeText(getApplicationContext(),
+                        "Connecting fail!",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+        removeSharePerf();
+        if (D)
+            Log.e(LOG_TAG, "onConnectionFail()");
+        runOnUiThread(new Thread() {
+            public void run() {
+//                closeControlFragment();
+                enableMainActivityButtons(false);
+                enableConnectButton(true);
+                Toast.makeText(getApplicationContext(), "Failed to connect!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    public void onDisconnected(BluetoothConnect instant) {
+        runOnUiThread(new Thread() {
+            public void run() {
+                Toast.makeText(getApplicationContext(), "Disconnected!", Toast.LENGTH_LONG).show();
+//                closeControlFragment();
+                Intent finishActIntent = new Intent(FINISH_ACTIVITY_BROADCAST);
+                localBroadcastManager.sendBroadcast(finishActIntent);
+                enableMainActivityButtons(false);
+                enableConnectButton(true);
+            }
+        });
+        if (D)
+            Log.e(LOG_TAG, "onDisconnected()");
+    }
+
+    private void removeSharePerf() {
+        SharedPreferences.Editor preferencesEditor = mSharedPref.edit();
+        preferencesEditor.remove(BLUETOOTH_REMOTE_DEVICE);
+        preferencesEditor.apply();
+    }
+
+    private void enableMainActivityButtons(boolean flag) {
+        Button MainActivityButton = findViewById(R.id.auto);
+        MainActivityButton.setEnabled(flag);
+        MainActivityButton = findViewById(R.id.controller);
+        MainActivityButton.setEnabled(flag);
+        MainActivityButton = findViewById(R.id.draw);
+        MainActivityButton.setEnabled(flag);
+        MainActivityButton = findViewById(R.id.build);
+        MainActivityButton.setEnabled(flag);
+    }
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
+
 }

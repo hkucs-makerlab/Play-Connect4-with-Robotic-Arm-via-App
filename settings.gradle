@@ -1,3 +1,4 @@
 rootProject.name = "fyp_connectfourbot"
 include ':app'
 include ':openCVLibrary3416'
+include ':libBT'

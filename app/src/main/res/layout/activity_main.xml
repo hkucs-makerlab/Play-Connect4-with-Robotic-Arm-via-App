@@ -8,9 +8,13 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="280dp"
-        android:layout_height="400dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title2">
@@ -20,11 +24,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/main_activity_button"
             android:text="Player VS AI Mode"
+            app:layout_constraintBottom_toTopOf="@+id/controller"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,12 +38,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/main_activity_button"
             android:onClick="launchControllerActivity"
             android:text="Arm Controller"
+            app:layout_constraintBottom_toTopOf="@+id/draw"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auto" />
 
@@ -47,12 +53,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/main_activity_button"
             android:onClick="launchDrawingActivity"
             android:text="Drawing Mode"
+            app:layout_constraintBottom_toTopOf="@+id/build"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/controller" />
 
@@ -61,14 +68,50 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/main_activity_button"
             android:onClick="launchBuildingActivity"
             android:text="Building Mode"
+            app:layout_constraintBottom_toTopOf="@+id/bluetooth"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/draw" />
+
+        <ImageButton
+            android:id="@+id/bluetooth"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@drawable/main_activity_button"
+            android:onClick="launchBluetoothActivity"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/build"
+            app:srcCompat="@drawable/ic_baseline_bluetooth_24" />
+
+<!--        <android.widget.Button-->
+<!--            android:id="@+id/bluetooth"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:background="@drawable/main_activity_button"-->
+<!--            android:onClick="launchBuildingActivity"-->
+<!--            android:text="Connect"-->
+<!--            android:drawableLeft="@drawable/ic_baseline_settings_bluetooth_24"-->
+
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/build"-->
+
+<!--            />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -83,7 +126,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.10" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <TextView
         android:id="@+id/title2"
@@ -95,6 +138,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.10" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
