@@ -5,10 +5,10 @@
 5    android:versionName="3.4.16" >
 6
 7    <uses-sdk
-7-->E:\git\fyp\fyp_connectfourbot\openCVLibrary3416\src\main\AndroidManifest.xml:7:5-17
+7-->C:\Users\Alan\GitRepo\fyp\fyp_connectfourbot\openCVLibrary3416\src\main\AndroidManifest.xml:7:5-17
 8        android:minSdkVersion="8"
-8-->E:\git\fyp\fyp_connectfourbot\openCVLibrary3416\src\main\AndroidManifest.xml:7:5-17
+8-->C:\Users\Alan\GitRepo\fyp\fyp_connectfourbot\openCVLibrary3416\src\main\AndroidManifest.xml:7:5-17
 9        android:targetSdkVersion="31" />
-9-->E:\git\fyp\fyp_connectfourbot\openCVLibrary3416\src\main\AndroidManifest.xml:7:5-17
+9-->C:\Users\Alan\GitRepo\fyp\fyp_connectfourbot\openCVLibrary3416\src\main\AndroidManifest.xml:7:5-17
 10
 11</manifest>
