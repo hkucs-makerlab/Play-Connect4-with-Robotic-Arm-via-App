@@ -33,12 +33,6 @@ import com.makerlab.bt.BluetoothConnect;
 import com.makerlab.bt.BluetoothScan;
 import com.makerlab.ui.BluetoothDevListActivity;
 
-import org.pytorch.IValue;
-import org.pytorch.LiteModuleLoader;
-import org.pytorch.Module;
-import org.pytorch.Tensor;
-import org.pytorch.torchvision.TensorImageUtils;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -68,11 +62,9 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
 //    private String[] mTestImages = {"test1.png", "test2.jpg", "test3.png"};
 
     private ImageView mImageView;
-    private CameraView mResultView;
     private Button mButtonDetect;
     private ProgressBar mProgressBar;
     private Bitmap mBitmap = null;
-    private Module mModule = null;
     private float mImgScaleX, mImgScaleY, mIvScaleX, mIvScaleY, mStartX, mStartY;
 
     //bluetooth variable
@@ -223,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
 
 
         final Button buttonLive = findViewById(R.id.auto);
+
         buttonLive.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final Intent intent = new Intent(MainActivity.this, AutoActivity.class);
@@ -252,20 +245,6 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
 //            }
 //        });
 
-        try {
-            mModule = LiteModuleLoader.load(MainActivity.assetFilePath(getApplicationContext(), "model.ptl"));
-            BufferedReader br = new BufferedReader(new InputStreamReader(getAssets().open("classes.txt")));
-            String line;
-            List<String> classes = new ArrayList<>();
-            while ((line = br.readLine()) != null) {
-                classes.add(line);
-            }
-            PrePostProcessor.mClasses = new String[classes.size()];
-            classes.toArray(PrePostProcessor.mClasses);
-        } catch (IOException e) {
-            Log.e("Object Detection", "Error reading assets", e);
-            finish();
-        }
     }
 
     @Override
@@ -332,24 +311,9 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
         }
     }
 
-
     @Override
-    public void run() {
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(mBitmap, PrePostProcessor.mInputWidth, PrePostProcessor.mInputHeight, true);
-        final Tensor inputTensor = TensorImageUtils.bitmapToFloat32Tensor(resizedBitmap, PrePostProcessor.NO_MEAN_RGB, PrePostProcessor.NO_STD_RGB);
-        IValue[] outputTuple = mModule.forward(IValue.from(inputTensor)).toTuple();
-        final Tensor outputTensor = outputTuple[0].toTensor();
-        final float[] outputs = outputTensor.getDataAsFloatArray();
-        final ArrayList<Result> results =  PrePostProcessor.outputsToNMSPredictions(outputs, mImgScaleX, mImgScaleY, mIvScaleX, mIvScaleY, mStartX, mStartY);
+    public void run(){
 
-        runOnUiThread(() -> {
-            mButtonDetect.setEnabled(true);
-//            mButtonDetect.setText(getString(R.string.detect));
-            mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-            mResultView.setResults(results);
-            mResultView.invalidate();
-            mResultView.setVisibility(View.VISIBLE);
-        });
     }
 
 //    public void launchAutoActivity(View view) {
@@ -500,7 +464,8 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
 
     private void enableMainActivityButtons(boolean flag) {
         Button MainActivityButton = findViewById(R.id.auto);
-        MainActivityButton.setEnabled(flag);
+//        MainActivityButton.setEnabled(flag);
+        MainActivityButton.setEnabled(true);
         MainActivityButton = findViewById(R.id.controller);
         MainActivityButton.setEnabled(flag);
         MainActivityButton = findViewById(R.id.draw);
