@@ -1,5 +1,6 @@
 package hk.hku.cs.fyp_connectfourbot;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -57,6 +58,7 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
     public boolean boardInit = false;
     public ArrayList<ArrayList<ArrayList<Integer>>> board = new ArrayList<>();
     public ArrayList<ArrayList<ArrayList<Integer>>> trueBoard = new ArrayList<>();
+    public int nextStage = 0;
 
 
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -179,7 +181,7 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
                     Imgproc.circle(cannyImg, center, 0, new Scalar(255, 255, 255), 20);
                 }
             }
-            
+
 
             if (board.size() >0){
                 for (int x=0; x < board.size() ; x++ ) {
@@ -200,63 +202,70 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
             return cannyImg;
         }
         else{
-            Imgproc.cvtColor(input, input, Imgproc.COLOR_BGR2HSV);
-            if (count != 0){
-//            Log.i(TAG, String.valueOf("Count:"+count));
-                count--;
+            nextStage++;
+            if(nextStage == 1){
+                Intent boardAct = new Intent(this, BoardActivity.class);
+                boardAct.putExtra("boardCoor", new Coordinates(trueBoard));
+                startActivity(boardAct);
             }
-            else{
-                count = 100;
-                Log.i(TAG, String.valueOf("--------------------------------S-------------------------------------"));
-
-                String boardStr = "Board State: \n";
-                for (int x=0; x < trueBoard.size() ; x++ ) {
-                    String rowStr = "";
-                    for (int y = 0; y < trueBoard.get(x).size(); y++){
-                        Point p = new Point((int) trueBoard.get(x).get(y).get(0), (int) trueBoard.get(x).get(y).get(1));
-//                    Imgproc.circle(input, p, 0, new Scalar(255, 0, 0), 5);
-                        double[] pixel = input.get(trueBoard.get(x).get(y).get(1), trueBoard.get(x).get(y).get(0));
-                        rowStr = getColor(pixel) + " " +rowStr;
-//                    rowStr = getColor(pixel) +"("+pixel[0]+ ","+ pixel[1]+ ","+ pixel[2]+")"+ " " +rowStr;
-//                    Log.i(TAG, String.valueOf("RGB: "+ getColor(pixel)));
-//                    Log.i(TAG, String.valueOf("Pixel: "+ pixel[0]+ ","+ pixel[1]+ ","+ pixel[2]));
-//                    if (getColor(pixel) == "G"){
-//                        Imgproc.circle(input, p, 0, new Scalar(0, 128, 0), 5);
+//            Imgproc.cvtColor(input, input, Imgproc.COLOR_BGR2HSV);
+//            if (count != 0){
+////            Log.i(TAG, String.valueOf("Count:"+count));
+//                count--;
+//            }
+//            else{
+//                count = 100;
+//                Log.i(TAG, String.valueOf("--------------------------------S-------------------------------------"));
+//
+//                String boardStr = "Board State: \n";
+//                for (int x=0; x < trueBoard.size() ; x++ ) {
+//                    String rowStr = "";
+//                    for (int y = 0; y < trueBoard.get(x).size(); y++){
+//                        Point p = new Point((int) trueBoard.get(x).get(y).get(0), (int) trueBoard.get(x).get(y).get(1));
+////                    Imgproc.circle(input, p, 0, new Scalar(255, 0, 0), 5);
+//                        double[] pixel = input.get(trueBoard.get(x).get(y).get(1), trueBoard.get(x).get(y).get(0));
+//                        rowStr = getColor(pixel) + " " +rowStr;
+////                    rowStr = getColor(pixel) +"("+pixel[0]+ ","+ pixel[1]+ ","+ pixel[2]+")"+ " " +rowStr;
+////                    Log.i(TAG, String.valueOf("RGB: "+ getColor(pixel)));
+////                    Log.i(TAG, String.valueOf("Pixel: "+ pixel[0]+ ","+ pixel[1]+ ","+ pixel[2]));
+////                    if (getColor(pixel) == "G"){
+////                        Imgproc.circle(input, p, 0, new Scalar(0, 128, 0), 5);
+////                    }
+////                    else if (getColor(pixel) == "R"){
+////                        Imgproc.circle(input, p, 0, new Scalar(128, 0, 0), 5);
+////                    }
+////                    else if (getColor(pixel) == "X") {
+////                        Imgproc.circle(input, p, 0, new Scalar(225, 225, 225), 5);
+////                    }
+//
 //                    }
-//                    else if (getColor(pixel) == "R"){
-//                        Imgproc.circle(input, p, 0, new Scalar(128, 0, 0), 5);
-//                    }
-//                    else if (getColor(pixel) == "X") {
-//                        Imgproc.circle(input, p, 0, new Scalar(225, 225, 225), 5);
-//                    }
-
-                    }
-                    boardStr += rowStr + "\n";
-//                Log.i(TAG, String.valueOf("--------------------------------R"+x+"-------------------------------------"));
-                }
-                Log.i(TAG, boardStr);
-                Log.i(TAG, String.valueOf("--------------------------------End-------------------------------------"));
-            }
+//                    boardStr += rowStr + "\n";
+////                Log.i(TAG, String.valueOf("--------------------------------R"+x+"-------------------------------------"));
+//                }
+//                Log.i(TAG, boardStr);
+//                Log.i(TAG, String.valueOf("--------------------------------End-------------------------------------"));
+//            }
 
 //            Imgproc.cvtColor(input, input, Imgproc.COLOR_HSV2BGR);
+
             return input;
         }
 
     }
 
-    public String getColor(double[] rgbValue){
-        int Hue = (int) rgbValue[0];
-        if ( Hue > 100 ){
-            return "P";
-        }
-        else if (Hue < 100 && Hue >30){
-            return "G";
-        }
-        else{
-            return "X";
-        }
-
-    }
+//    public String getColor(double[] rgbValue){
+//        int Hue = (int) rgbValue[0];
+//        if ( Hue > 100 ){
+//            return "P";
+//        }
+//        else if (Hue < 100 && Hue >30){
+//            return "G";
+//        }
+//        else{
+//            return "X";
+//        }
+//
+//    }
 
     public void checkBoardInit(){
         if (board.size() > 0){

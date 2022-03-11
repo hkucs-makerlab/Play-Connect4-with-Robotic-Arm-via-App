@@ -44,7 +44,11 @@
             android:label="Auto Mode Activity"
             >
         </activity>
-
+        <activity
+            android:name=".BoardActivity"
+            android:label="Board Activity"
+            >
+        </activity>
         <activity
             android:name="com.makerlab.ui.BluetoothDevListActivity"
             android:label="Scanning Bluetooth Devices"
