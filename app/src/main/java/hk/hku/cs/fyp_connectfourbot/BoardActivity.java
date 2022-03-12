@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.cppexample.CppActivity;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.InstallCallbackInterface;
@@ -54,6 +56,9 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     private Timer autoUpdate;
     public ArrayList<ArrayList<Integer>> preState = new ArrayList<>();
     public ArrayList<ArrayList<Integer>> currentState = new ArrayList<>();
+
+    private CppActivity mCppActivity = new CppActivity();
+    private TextView mTextView;
 
     BroadcastReceiver FinishReceiver = new BroadcastReceiver() {
         @Override
@@ -106,6 +111,8 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
+        mCppActivity.setNativeAssetManager(getAssets());
+        mTextView = findViewById(R.id.score);
         textView = findViewById(R.id.textView2);
         Thread t = new Thread() {
 
@@ -206,7 +213,8 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     }
 
     public void changeText(View view){
-        textView.setText(realStr);
+        String temp = "4453";
+        mTextView.setText(mCppActivity.mystringFromJNI(temp));
     }
 
     public void updateText(){
