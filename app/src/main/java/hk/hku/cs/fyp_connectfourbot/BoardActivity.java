@@ -34,6 +34,8 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class BoardActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
@@ -49,6 +51,9 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     public ArrayList<ArrayList<ArrayList<Integer>>> trueBoard = new ArrayList<>();
     public int count = 10;
     public String realStr = "";
+    private Timer autoUpdate;
+    public ArrayList<ArrayList<Integer>> preState = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> currentState = new ArrayList<>();
 
     BroadcastReceiver FinishReceiver = new BroadcastReceiver() {
         @Override
@@ -102,7 +107,28 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
         textView = findViewById(R.id.textView2);
-        textView.setText("Change");
+        Thread t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(5000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                validator();
+                                updateText();
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
+
         changeText = findViewById(R.id.update);
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         javaCameraView = (JavaCameraView) findViewById(R.id.cameraview1);
@@ -139,8 +165,9 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 //                    Imgproc.circle(input, p, 0, new Scalar(255, 0, 0), 5);
                     double[] pixel = input.get(trueBoard.get(x).get(y).get(1), trueBoard.get(x).get(y).get(0));
                     rowStr = getColor(pixel) + " " +rowStr;
+                    constructBoardState(getColor(pixel), x, y);
 //                    rowStr = getColor(pixel) +"("+pixel[0]+ ","+ pixel[1]+ ","+ pixel[2]+")"+ " " +rowStr;
-                    Log.i(TAG, String.valueOf("RGB: "+ getColor(pixel)));
+//                    Log.i(TAG, String.valueOf("RGB: "+ getColor(pixel)));
 //                    Log.i(TAG, String.valueOf("Pixel: "+ pixel[0]+ ","+ pixel[1]+ ","+ pixel[2]));
 //                    if (getColor(pixel) == "G"){
 //                        Imgproc.circle(input, p, 0, new Scalar(0, 128, 0), 5);
@@ -157,7 +184,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 //                Log.i(TAG, String.valueOf("--------------------------------R"+x+"-------------------------------------"));
             }
             realStr = boardStr;
-            Log.i(TAG, boardStr);
+//            Log.i(TAG, boardStr);
 //            textView.setText(boardStr);
             Log.i(TAG, String.valueOf("--------------------------------End-------------------------------------"));
         }
@@ -180,6 +207,27 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 
     public void changeText(View view){
         textView.setText(realStr);
+    }
+
+    public void updateText(){
+        textView.setText(realStr);
+    }
+
+    public void validator(){
+        Log.d(TAG, "HI");
+    }
+
+    public void constructBoardState(String color, int x, int y){
+        //column first
+        int code = 0;
+        if(color == "G"){
+            code = 1;
+        }
+        else if(color == "P"){
+            code = 2;
+        }
+
+
     }
 
     @Override
@@ -232,6 +280,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     protected void onResume() {
 
         super.onResume();
+
 
         if (OpenCVLoader.initDebug()){
             Log.d(TAG, "OpenCV Config successful");
