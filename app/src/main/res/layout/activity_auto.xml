@@ -6,22 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".AutoActivity">
 
-    <ViewStub
-        android:id="@+id/activity_auto_board_detection"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout="@layout/mat_view"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <hk.hku.cs.fyp_connectfourbot.CameraView
-        android:id="@+id/resultView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintDimensionRatio="1:1"
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <org.opencv.android.JavaCameraView
+            android:id="@+id/cameraview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
