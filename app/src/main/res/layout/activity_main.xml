@@ -42,13 +42,13 @@
             android:background="@drawable/main_activity_button"
             android:onClick="launchControllerActivity"
             android:text="Arm Controller"
-            app:layout_constraintBottom_toTopOf="@+id/draw"
+            app:layout_constraintBottom_toTopOf="@+id/build"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auto" />
 
-        <android.widget.Button
+        <!--<android.widget.Button
             android:id="@+id/draw"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/controller" />
+            app:layout_constraintTop_toBottomOf="@+id/controller" />-->
 
         <android.widget.Button
             android:id="@+id/build"
@@ -76,7 +76,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/draw" />
+            app:layout_constraintTop_toBottomOf="@+id/controller" />
 
         <ImageButton
             android:id="@+id/bluetooth"
@@ -92,26 +92,26 @@
             app:layout_constraintTop_toBottomOf="@+id/build"
             app:srcCompat="@drawable/ic_baseline_bluetooth_24" />
 
-<!--        <android.widget.Button-->
-<!--            android:id="@+id/bluetooth"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:background="@drawable/main_activity_button"-->
-<!--            android:onClick="launchBuildingActivity"-->
-<!--            android:text="Connect"-->
-<!--            android:drawableLeft="@drawable/ic_baseline_settings_bluetooth_24"-->
+        <!--        <android.widget.Button-->
+        <!--            android:id="@+id/bluetooth"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="16dp"-->
+        <!--            android:layout_marginEnd="16dp"-->
+        <!--            android:background="@drawable/main_activity_button"-->
+        <!--            android:onClick="launchBuildingActivity"-->
+        <!--            android:text="Connect"-->
+        <!--            android:drawableLeft="@drawable/ic_baseline_settings_bluetooth_24"-->
 
 
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
 
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.5"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/build"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.5"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/build"-->
 
-<!--            />-->
+        <!--            />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
