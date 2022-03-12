@@ -42,13 +42,13 @@
             android:background="@drawable/main_activity_button"
             android:onClick="launchControllerActivity"
             android:text="Arm Controller"
-            app:layout_constraintBottom_toTopOf="@+id/draw"
+            app:layout_constraintBottom_toTopOf="@+id/build"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auto" />
 
-        <android.widget.Button
+        <!--<android.widget.Button
             android:id="@+id/draw"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/controller" />
+            app:layout_constraintTop_toBottomOf="@+id/controller" />-->
 
         <android.widget.Button
             android:id="@+id/build"
@@ -76,7 +76,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/draw" />
+            app:layout_constraintTop_toBottomOf="@+id/controller" />
 
         <ImageButton
             android:id="@+id/bluetooth"
