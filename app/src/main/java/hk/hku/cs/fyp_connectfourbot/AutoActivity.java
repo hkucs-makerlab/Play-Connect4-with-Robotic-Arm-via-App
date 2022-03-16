@@ -59,6 +59,7 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
     public ArrayList<ArrayList<ArrayList<Integer>>> board = new ArrayList<>();
     public ArrayList<ArrayList<ArrayList<Integer>>> trueBoard = new ArrayList<>();
     public int nextStage = 0;
+    public int player;
 
 
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -95,7 +96,8 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auto);
-
+        player = getIntent().getIntExtra("player", 0);
+//        Log.d(TAG, player);
 
         javaCameraView = (JavaCameraView) findViewById(R.id.cameraview);
         javaCameraView.setVisibility(SurfaceView.VISIBLE);
@@ -205,7 +207,7 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
             nextStage++;
             if(nextStage == 1){
                 Intent boardAct = new Intent(this, BoardActivity.class);
-                boardAct.putExtra("boardCoor", new Coordinates(trueBoard));
+                boardAct.putExtra("serializable", new Payload(trueBoard, player));
                 startActivity(boardAct);
             }
 //            Imgproc.cvtColor(input, input, Imgproc.COLOR_BGR2HSV);

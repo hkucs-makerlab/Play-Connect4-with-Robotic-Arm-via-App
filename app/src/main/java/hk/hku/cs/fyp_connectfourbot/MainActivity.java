@@ -214,14 +214,14 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
         }
 
 
-        final Button buttonLive = findViewById(R.id.auto);
-
-        buttonLive.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final Intent intent = new Intent(MainActivity.this, AutoActivity.class);
-                startActivity(intent);
-            }
-        });
+//        final Button buttonLive = findViewById(R.id.auto);
+//
+//        buttonLive.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                final Intent intent = new Intent(MainActivity.this, AutoActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
 //        mButtonDetect = findViewById(R.id.detectButton);
 //        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -316,11 +316,16 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
 
     }
 
-//    public void launchAutoActivity(View view) {
+    public void launchSelectActivity(View view){
+        Intent selectModeAct = new Intent(this, SelectActivity.class);
+        startActivity(selectModeAct);
+    }
+
+    public void launchAutoActivity(View view) {
 //        Log.d(TAG, "Launch Auto Activity");
-//        Intent autoModeAct = new Intent(this, AutoActivity.class);
-//        startActivity(autoModeAct);
-//    }
+        Intent autoModeAct = new Intent(this, AutoActivity.class);
+        startActivity(autoModeAct);
+    }
 //
     public void launchManualActivity(View view) {
 //        Log.d(TAG, "Launch Manual Activity");

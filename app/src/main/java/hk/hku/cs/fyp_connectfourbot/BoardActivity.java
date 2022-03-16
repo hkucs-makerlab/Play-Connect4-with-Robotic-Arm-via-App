@@ -23,21 +23,12 @@ import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.InstallCallbackInterface;
-import org.opencv.android.JavaCameraView;
-import org.opencv.android.OpenCVLoader;
 import org.opencv.core.CvType;
-import org.opencv.core.Mat;
 import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Collections;
 
 
 public class BoardActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
@@ -48,22 +39,31 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     private LocalBroadcastManager localBroadcastManager;
     JavaCameraView javaCameraView;
     TextView textView;
-    Button changeText;
+    TextView scoreView;
+    TextView messageView;
+    TextView turnView;
+    Button hintsText;
     Mat mRGBA, mRGBAT;
-    public int count = 50;
+    public int count = 10;
+    public int turnCount = 1;
+    public int playerScore = 0;
     public String realStr = "";
 
     public ArrayList<ArrayList<ArrayList<Integer>>> trueBoard = new ArrayList<>();
     public ArrayList<ArrayList<Integer>> preState = new ArrayList<>();
     public ArrayList<ArrayList<Integer>> currentState = new ArrayList<>();
     public ArrayList<Integer> validPos = new ArrayList<>();
+    public ArrayList<Integer> bestMove = new ArrayList<>();
 
     public boolean initialReading = false;
 
     private CppActivity mCppActivity = new CppActivity();
-    private TextView mTextView;
+    private TextView HintsView;
     public String sequence = "";
-    public String firstPlayer = "";
+    public int playerCode;
+    public String firstPlayer;
+    public String secondPlayer;
+
 
 
     BroadcastReceiver FinishReceiver = new BroadcastReceiver() {
@@ -117,33 +117,51 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
+        setContentView(R.layout.activity_board);
         mCppActivity.setNativeAssetManager(getAssets());
-        mTextView = findViewById(R.id.score);
+        HintsView = findViewById(R.id.hintsView);
         textView = findViewById(R.id.textView2);
-        changeText = findViewById(R.id.update);
+        hintsText = findViewById(R.id.hintsButton);
+        scoreView = findViewById(R.id.scoreView);
+        messageView = findViewById(R.id.messageView);
+        turnView = findViewById(R.id.turnView);
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         javaCameraView = (JavaCameraView) findViewById(R.id.cameraview1);
         javaCameraView.setVisibility(SurfaceView.VISIBLE);
         javaCameraView.setCvCameraViewListener(BoardActivity.this);
         preState = initBoardState();
         currentState = initBoardState();
-        Coordinates coor = (Coordinates) getIntent().getSerializableExtra("boardCoor");
-        if(coor != null){
-            trueBoard = coor.coor;
+        Payload serializable = (Payload) getIntent().getSerializableExtra("serializable");
+        if(serializable != null){
+            trueBoard = serializable.coor;
+
+            playerCode = serializable.player;
+            Log.d(TAG, String.valueOf(firstPlayer));
+            if ( playerCode == 1){
+                firstPlayer = "Human";
+                secondPlayer = "Robot";
+            }
+            else if( playerCode == 0){
+                firstPlayer = "Robot";
+                secondPlayer = "Human";
+            }
             Log.d(TAG, "Data retrieved");
         }
+
         Thread t = new Thread() {
 
             @Override
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(5000);
+                        Thread.sleep(1000);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 updateText();
+                                getSequence();
                                 getBestMove();
+                                updateTurn();
                             }
                         });
                     }
@@ -170,7 +188,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 
         }
         else{
-            count = 50;
+            count = 10;
 //            Log.i(TAG, String.valueOf("--------------------------------S-------------------------------------"));
 
             String boardStr = "Board State: \n";
@@ -212,7 +230,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 //            textView.setText(boardStr);
 //            Log.i(TAG, String.valueOf("--------------------------------End-------------------------------------"));
             initialReading = true;
-            getSequence();
+
 
         }
         return inputFrame.rgba();
@@ -236,21 +254,85 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         //display the board state in the virtual board
     }
 
-    public void displayHints(){
+    public void updateTurn(){
+        //display who takes the next turn
+
+        int order = turnCount%2;
+
+        if (order == 1){
+            Log.i(TAG, "player:"+firstPlayer);
+            String tempStr = firstPlayer+" takes the turn";
+            turnView.setText(tempStr);
+        }
+        else if(order == 0){
+            Log.i(TAG, "player:"+secondPlayer);
+            String tempStr = secondPlayer+" takes the turn";
+            turnView.setText(tempStr);
+        }
 
     }
 
-    public void changeText(View view){
+
+    public void showHints(View view){
 //        Log.d(TAG, "Sequence: "+sequence);
-        if (sequence != ""){
-            mTextView.setText(mCppActivity.mystringFromJNI(sequence));
+        String displayString = "";
+        getBestMove();
+        for(int i = 0; i < bestMove.size(); i++){
+            if(bestMove.get(i) == 1){
+                displayString += "O" + ",";
+            }
+            else{
+                displayString += "X" + ",";
+            }
         }
+        HintsView.setText(displayString);
+        ArrayList<Integer> scores = new ArrayList<>();
+
+//        int max;
+//        String scoreResults = mCppActivity.mystringFromJNI(sequence);
+//        if (sequence != ""){
+//
+//            String[] splitText = scoreResults.split(",");
+//            for(int i = 0; i < splitText.length; i++){
+//                scores.add(Integer.valueOf(splitText[i]));
+//            }
+//            max = Collections.max(scores);
+//            for(int i = 0; i < scores.size(); i++){
+//                if(scores.get(i) == max){
+//                    displayString += "O" + ",";
+//                }
+//                else{
+//                    displayString += "X" + ",";
+//                }
+//            }
+//            HintsView.setText(displayString);
+//            Log.i(TAG, scoreResults);
+//
+//        }
     }
 
     public void getBestMove(){
         Log.d(TAG, "Sequence: "+sequence);
+        ArrayList<Integer> scores = new ArrayList<>();
+        ArrayList<Integer> tempMoves = new ArrayList<>();
+        int max;
         if (sequence != ""){
-            mTextView.setText(mCppActivity.mystringFromJNI(sequence));
+            String scoreResults = mCppActivity.mystringFromJNI(sequence);
+            String[] splitText = scoreResults.split(",");
+            for(int i = 0; i < splitText.length; i++){
+                scores.add(Integer.valueOf(splitText[i]));
+            }
+            max = Collections.max(scores);
+            for(int i = 0; i < scores.size(); i++){
+                if(scores.get(i) == max){
+                    tempMoves.add(1);
+                }
+                else {
+                    tempMoves.add(0);
+                }
+            }
+            bestMove = tempMoves;
+            Log.i(TAG, scoreResults);
         }
     }
 
@@ -258,19 +340,55 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         textView.setText(realStr);
     }
 
-    public void getSequence(){
-        //compare the current board state and previous board state to output the sequence
-        ArrayList<Integer> tempCol = new ArrayList<>();
-        for ( int col = 0; col < 7; col++){
-            for (int row = 0; row < 6; row++){
-                if (currentState.get(col).get(row) - preState.get(col).get(row) > 0 && validate(col, row)){
-                    tempCol = preState.get(col);
-                    tempCol.set(row, currentState.get(col).get(row));
-                    preState.set(col, tempCol);
-                    sequence += String.valueOf(6-col+1);
+    public void updateScore(int col, int row){
+        int order = turnCount%2;
+        Log.i(TAG, String.valueOf("order:"+order+" playerCode:"+playerCode));
+        if (order == playerCode){
+            for (int i = 0; i < bestMove.size(); i++){
+                Log.i(TAG, String.valueOf("get:"+bestMove.get(i)+" col:"+col+"i:"+i));
+                if (bestMove.get(i) == 1 && col == 6 - i){
+                    playerScore += 5;
                 }
             }
         }
+        scoreView.setText(String.valueOf(playerScore));
+    }
+
+    public void getSequence(){
+        //compare the current board state and previous board state to output the sequence
+        //validate if the board is valid first
+        if(isValidBoard()){
+            ArrayList<Integer> tempCol = new ArrayList<>();
+            for ( int col = 0; col < 7; col++){
+                for (int row = 0; row < 6; row++){
+                    if (currentState.get(col).get(row) - preState.get(col).get(row) > 0 && validateChange(col, row)){
+                        tempCol = preState.get(col);
+                        tempCol.set(row, currentState.get(col).get(row));
+                        preState.set(col, tempCol);
+                        sequence += String.valueOf(6-col+1);
+                        updateScore(col, row);
+                        turnCount++;
+
+                    }
+                }
+            }
+        }
+
+    }
+
+    public boolean isValidBoard(){
+        Integer changedPos = 0;
+        for ( int col = 0; col < 7; col++){
+            for (int row = 0; row < 6; row++){
+                if (currentState.get(col).get(row) - preState.get(col).get(row) > 0){
+                    changedPos += 1;
+                }
+            }
+        }
+        if (changedPos == 1){
+            return true;
+        }
+        return false;
     }
 
     public void getInitValidPos(){
@@ -288,7 +406,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         }
     }
 
-    public boolean validate(int col, int row){
+    public boolean validateChange(int col, int row){
         Log.d(TAG, "row: "+row+"real row:"+String.valueOf(currentState.get(col).get(row)));
         if(validPos.get(col) == row){
             Log.i(TAG, String.valueOf("pos:"+col+","+row));

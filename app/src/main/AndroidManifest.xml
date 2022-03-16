@@ -16,45 +16,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fyp_connectfourbot">
-        <activity android:name=".DrawingActivity"
-            android:label="Building Mode"
-            >
-        </activity>
-
+        <activity
+            android:name=".SelectActivity"
+            android:label="Select Activity"></activity>
+        <activity
+            android:name=".DrawingActivity"
+            android:label="Building Mode"></activity>
         <activity
             android:name=".BuildingActivity"
-            android:label="Building Mode"
-            >
-        </activity>
-
+            android:label="Building Mode"></activity>
         <activity
             android:name=".ControllerActivity"
-            android:label="Arm Controller"
-            >
-        </activity>
-
+            android:label="Arm Controller"></activity>
         <activity
             android:name=".ManualActivity"
-            android:label="Manual Mode Activity"
-            >
-        </activity>
-
+            android:label="Manual Mode Activity"></activity>
         <activity
             android:name=".AutoActivity"
-            android:label="Auto Mode Activity"
-            >
-        </activity>
+            android:label="Auto Mode Activity"></activity>
         <activity
             android:name=".BoardActivity"
-            android:label="Board Activity"
-            >
-        </activity>
+            android:label="Board Activity"></activity>
         <activity
             android:name="com.makerlab.ui.BluetoothDevListActivity"
-            android:label="Scanning Bluetooth Devices"
-            >
-        </activity>
-
+            android:label="Scanning Bluetooth Devices"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
