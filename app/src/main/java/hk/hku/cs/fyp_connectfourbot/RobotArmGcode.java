@@ -17,25 +17,34 @@ public class RobotArmGcode {
     static final String M3 = "M3"; //grepper on
     static final String M5 = "M5"; //grepper off
     static final String G1 = "G1";   // move steppers
+    static final String G28 = "G28"; // auto home
     //
-    static final String HOME = G1+" X0 Y120 Z120";
-    static final String REST = G1+" X0 Y40 Z70";
-    static final String BOTTOM = G1+" X0 Y100 Z0";
-    static final String END_STOP =G1+ " X0 Y19.5 Z134";
-    static final String PICK = M3+" T35";
-    static final String PLACE = M5+" T10";
+    static final String HOME = G1+" X0 Y225 Z180";
+    static final String REST = G1+" X0 Y145 Z70";
+    static final String BOTTOM = G1+" X0 Y170 Z0";
+    static final String END_STOP =G1+" X0 Y70 Z134";
+    static final String PICK = M3+" T-5";
+    static final String PLACE = M3+" T45";
+
+//    static final String COL1 = G1+" X0 Y125 Z170";
+//    static final String COL2 = G1+" X0 Y160 Z170";
+//    static final String COL3 = G1+" X0 Y190 Z160";
+//    static final String COL4 = G1+" X0 Y225 Z150";
+//    static final String COL5 = G1+" X0 Y255 Z150";
+//    static final String COL6 = G1+" X0 Y285 Z140";
+//    static final String COL7 = G1+" X0 Y310 Z130";
+
+    static final String MOVE_LEFT = G1+" X-90 Y225 Z180";
+    static final String DISC_POS = G1+" G1 X-90 Y210 Z-65";
+
 
     static final double MINX = -200;
     static final double MAXX = 200;
-    static final double MINY = 50;
-    static final double MAXY = 220;
-    static final double MINZ = -20;
-    static final double MAXZ = 160;
-    static final double MAXGRIPOPEN = 50;
-    static final double MAXGRIPCLOSE = 35;
+    static final double MINZ = -80;
+    static final double MAXZ = 210;
 
 
-    private double mPosX=0, mPosY=120, mPosZ=120;
+    private double mPosX=0, mPosY=225, mPosZ=180;
 
     private static final String TAG = RobotArmGcode.class.getSimpleName();
 
@@ -59,12 +68,12 @@ public class RobotArmGcode {
 
     public byte[] moveY(int offset) {
         mPosY += offset;
-        if (mPosY >MAXY){mPosY=MAXY;}
+//        if (mPosY >MAXY){mPosY=MAXY;}
         return getPayload(G1 + " X" + mPosX + " Y" + mPosY + " Z" + mPosZ);
     }
     public byte[] moveNY(int offset) {
         mPosY -= offset;
-        if (mPosY <MINY){mPosY=MINY;}
+//        if (mPosY <MINY){mPosY=MINY;}
         return getPayload(G1 + " X" + mPosX + " Y" + mPosY + " Z" + mPosZ);
     }
 
@@ -79,28 +88,82 @@ public class RobotArmGcode {
         return getPayload(G1 + " X" + mPosX + " Y" + mPosY + " Z" + mPosZ);
     }
 
+    public byte[] toCol(int col) {
+        mPosX = 0;
+        switch (col) {
+            case 1:
+                mPosY=125;
+                mPosZ=170;
+                break;
+            case 2:
+                mPosY=160;
+                mPosZ=170;
+                break;
+            case 3:
+                mPosY=190;
+                mPosZ=160;
+                break;
+            case 4:
+                mPosY=225;
+                mPosZ=150;
+                break;
+            case 5:
+                mPosY=255;
+                mPosZ=150;
+                break;
+            case 6:
+                mPosY=285;
+                mPosZ=140;
+                break;
+            case 7:
+                mPosY=310;
+                mPosZ=130;
+                break;
+        }
+        return getPayload(G1 + " X" + mPosX + " Y" + mPosY + " Z" + mPosZ);
+    }
+
+    public byte[] autoHome() {
+        mPosX=0;
+        mPosY=225;
+        mPosZ=180;
+        return getPayload(G28);
+    }
+    public byte[] goLeft() {
+        mPosX=-90;
+        mPosY=225;
+        mPosZ=180;
+        return getPayload(MOVE_LEFT);
+    }
+    public byte[] goDiscPos() {
+        mPosX=-90;
+        mPosY=210;
+        mPosZ=-65;
+        return getPayload(DISC_POS);
+    }
+
 
     public byte[] goHome() {
         mPosX=0;
-        mPosY=120;
-        mPosZ=120;
+        mPosY=225;
+        mPosZ=180;
         return getPayload(HOME);
     }
     public byte[] goRest() {
         mPosX=0;
-        mPosY=40;
+        mPosY=145;
         mPosZ=70;
         return getPayload(REST);
     }
     public byte[] goBottom() {
         mPosX=0;
-        mPosY=100;
+        mPosY=170;
         mPosZ=0;
         return getPayload(BOTTOM);
     }
     public byte[] goEndStop() {
         mPosX=0;
-        mPosY=19.5;
+        mPosY=70;
         mPosZ=134;
         return getPayload(END_STOP);
     }

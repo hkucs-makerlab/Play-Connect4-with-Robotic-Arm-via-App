@@ -97,9 +97,10 @@ public class ControllerFragment extends Fragment implements
         mDataSendTimer.scheduleAtFixedRate(new DataSendTimerTask(), 1000, 250);
 
         mQueue.clear();
-        mQueue.add(mRobotArmGcode.setStepperOff());
-        mQueue.add(mRobotArmGcode.goHome());
-        mQueue.add(mRobotArmGcode.setStepperOn());
+        mQueue.add(mRobotArmGcode.autoHome());
+//        mQueue.add(mRobotArmGcode.setStepperOff());
+//        mQueue.add(mRobotArmGcode.goHome());
+//        mQueue.add(mRobotArmGcode.setStepperOn());
 
         if (D)
             Log.e(LOG_TAG, "onStart()");

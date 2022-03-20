@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.makerlab.bt.BluetoothConnect;
+
 public class SelectActivity extends AppCompatActivity {
 
+    private BluetoothConnect mBluetoothConnect;
+    private static RobotArmGcode mRobotArmGcode = new RobotArmGcode();
 
     Button humanPlayer;
     Button robotPlayer;
@@ -34,5 +38,16 @@ public class SelectActivity extends AppCompatActivity {
         Intent autoModeAct = new Intent(this, AutoActivity.class);
         autoModeAct.putExtra("player", player);
         startActivity(autoModeAct);
+    }
+
+    //do autohome while player is selecting play order
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MainActivity activity = MainActivity.getInstance();
+        mBluetoothConnect = activity.getBluetoothConnect();
+        if (mBluetoothConnect != null) {
+            mBluetoothConnect.send(mRobotArmGcode.autoHome());
+        }
     }
 }

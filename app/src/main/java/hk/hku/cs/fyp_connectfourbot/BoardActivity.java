@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.cppexample.CppActivity;
+import com.makerlab.bt.BluetoothConnect;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -29,6 +30,10 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class BoardActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
@@ -63,6 +68,11 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     public int playerCode;
     public String firstPlayer;
     public String secondPlayer;
+
+    private BluetoothConnect mBluetoothConnect;
+    private Timer mDataSendTimer = null;
+    private static RobotArmGcode mRobotArmGcode = new RobotArmGcode();
+    private static Queue<byte[]> mQueue = new LinkedList<>();
 
 
 
@@ -263,13 +273,56 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
             Log.i(TAG, "player:"+firstPlayer);
             String tempStr = firstPlayer+" takes the turn";
             turnView.setText(tempStr);
+            if (firstPlayer=="Robot") { //it is robot turn
+                if (turnCount==1){
+                    //ask robot to pick and place col 4
+                    robotMove(4);
+
+                } else{
+                    ArrayList<Integer> tempBestMove = new ArrayList<>();
+                    for(int i = 0; i < bestMove.size(); i++){
+                        if(bestMove.get(i) == 1){
+                            tempBestMove.add(i+1);
+                        }
+                    }
+                    Collections.shuffle(tempBestMove);
+                    //ask robot to pick and place col tempBestMove.get(0);
+                    robotMove(tempBestMove.get(0));
+                }
+            }
         }
         else if(order == 0){
             Log.i(TAG, "player:"+secondPlayer);
             String tempStr = secondPlayer+" takes the turn";
             turnView.setText(tempStr);
+            if (secondPlayer=="Robot") { //it is robot turn
+                ArrayList<Integer> tempBestMove = new ArrayList<>();
+                for(int i = 0; i < bestMove.size(); i++){
+                    if(bestMove.get(i) == 1){
+                        tempBestMove.add(i+1);
+                    }
+                }
+                Collections.shuffle(tempBestMove);
+                //ask robot to pick and place col tempBestMove.get(0);
+                robotMove(tempBestMove.get(0));
+            }
         }
 
+    }
+
+    public void robotMove(int col){
+        Log.d(TAG, "Start robotMove");
+        synchronized (mQueue) {
+            mQueue.add(mRobotArmGcode.goHome()); //start at home
+            mQueue.add(mRobotArmGcode.place()); //open gripper
+            mQueue.add(mRobotArmGcode.goLeft()); //move left to be above stacker
+            mQueue.add(mRobotArmGcode.goDiscPos()); //move down to pick
+            mQueue.add(mRobotArmGcode.pick()); //pick disc
+            mQueue.add(mRobotArmGcode.goLeft()); //move up
+            mQueue.add(mRobotArmGcode.goHome()); //back to home
+            mQueue.add(mRobotArmGcode.toCol(col)); //move down into column
+            mQueue.add(mRobotArmGcode.place()); //place the disc
+        }
     }
 
 
@@ -477,6 +530,29 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     protected void onStart() {
         super.onStart();
         localBroadcastManager.registerReceiver(FinishReceiver, new IntentFilter(FINISH_ACTIVITY_BROADCAST));
+        MainActivity activity = MainActivity.getInstance();
+        mBluetoothConnect = activity.getBluetoothConnect();
+        mDataSendTimer = new Timer();
+        mDataSendTimer.scheduleAtFixedRate(new DataSendTimerTask(), 1000, 250);
+        mQueue.clear();
+
+    }
+
+    class DataSendTimerTask extends TimerTask {
+        private String LOG_TAG = ControllerFragment.DataSendTimerTask.class.getSimpleName();
+
+        @Override
+        public void run() {
+            if (mBluetoothConnect == null) {
+                return;
+            }
+            synchronized (mQueue) {
+                if (!mQueue.isEmpty()) {
+                    mBluetoothConnect.send(mQueue.remove());
+                    Log.e(LOG_TAG, "DataSendTimerTask.run() - send");
+                }
+            }
+        }
     }
 
     @Override
