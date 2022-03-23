@@ -1,7 +1,9 @@
 package hk.hku.cs.fyp_connectfourbot;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +12,11 @@ import android.widget.Button;
 import com.makerlab.bt.BluetoothConnect;
 
 public class SelectActivity extends AppCompatActivity {
+    private static String TAG = "SelectActivity";
 
     private BluetoothConnect mBluetoothConnect;
     private static RobotArmGcode mRobotArmGcode = new RobotArmGcode();
+    AlertDialog.Builder builder;
 
     Button humanPlayer;
     Button robotPlayer;
@@ -22,6 +26,7 @@ public class SelectActivity extends AppCompatActivity {
         robotPlayer = findViewById(R.id.robotButton);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
+        builder = new AlertDialog.Builder(SelectActivity.this);
     }
 
 
@@ -50,4 +55,33 @@ public class SelectActivity extends AppCompatActivity {
             mBluetoothConnect.send(mRobotArmGcode.autoHome());
         }
     }
+
+    @Override
+    public void onBackPressed(){
+        //Back to MainActivity instead of prevActivity
+
+        //Prompt
+//        builder.setMessage("Are you sure?").setTitle("ALERT").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface arg0, int arg1) {
+//                Intent intent = new Intent(SelectActivity.this, MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//                finish();
+//            }
+//
+//        }).setNegativeButton("Cancel", doNothing());
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+
+        Intent intent = new Intent(SelectActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+//    public DialogInterface.OnClickListener doNothing(){
+//
+//        return null;
+//    }
 }

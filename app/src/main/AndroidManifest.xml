@@ -43,7 +43,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Fyp_connectfourbot.NoActionBar">
+            android:theme="@style/Theme.Fyp_connectfourbot.NoActionBar"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

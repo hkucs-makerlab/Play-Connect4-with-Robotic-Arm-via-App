@@ -3,6 +3,7 @@ package hk.hku.cs.fyp_connectfourbot;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 
 public class BoardActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
@@ -52,6 +54,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     public int count = 10;
     public int turnCount = 1;
     public int playerScore = 0;
+    public int boardScore = 1;
     public String realStr = "";
 
     public ArrayList<ArrayList<ArrayList<Integer>>> trueBoard = new ArrayList<>();
@@ -157,6 +160,15 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
             }
             Log.d(TAG, "Data retrieved");
         }
+        for(int i = 0; i < 7; i++){
+            if(i == 3){
+                bestMove.add(1);
+            }
+            else{
+                bestMove.add(0);
+            }
+
+        }
 
         Thread t = new Thread() {
 
@@ -223,6 +235,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                     //ask robot to pick and place col 4
                     robotMove(4);
                 }
+
             }
             realStr = boardStr;
 
@@ -316,7 +329,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     public void showHints(View view){
 //        Log.d(TAG, "Sequence: "+sequence);
         String displayString = "";
-        getBestMove();
+//        getBestMove();
         for(int i = 0; i < bestMove.size(); i++){
             if(bestMove.get(i) == 1){
                 displayString += "O" + ",";
@@ -341,6 +354,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                 scores.add(Integer.valueOf(splitText[i]));
             }
             max = Collections.max(scores);
+            boardScore = Collections.max(scores);
             for(int i = 0; i < scores.size(); i++){
                 if(scores.get(i) == max){
                     tempMoves.add(1);
@@ -360,13 +374,21 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 
     public void updateScore(int col, int row){
         int order = turnCount%2;
+        boolean goodMove = false;
         Log.i(TAG, String.valueOf("order:"+order+" playerCode:"+playerCode));
         if (order == playerCode){
             for (int i = 0; i < bestMove.size(); i++){
                 Log.i(TAG, String.valueOf("get:"+bestMove.get(i)+" col:"+col+"i:"+i));
                 if (bestMove.get(i) == 1 && col == 6 - i){
                     playerScore += 5;
+                    goodMove = true;
                 }
+            }
+            if (goodMove){
+                messageView.setText("Good Move!");
+            }
+            else{
+                messageView.setText("Bad Move!");
             }
         }
         scoreView.setText(String.valueOf(playerScore));
@@ -386,11 +408,17 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                         preState.set(col, tempCol);
 
                         sequence += String.valueOf(6-col+1);    //Update sequence
-                        getBestMove();  //Get new best move
+
 
                         updateScore(col, row);  //if human player's turn
+                        getBestMove();  //Get new best move
 
                         turnCount++;
+                        //Turn ends
+
+                        if (turnCount%2 == playerCode){//if human player's turn
+                            calAndDisplayMessage();
+                        }
 
                         if (turnCount%2 != playerCode){ //if robot player's turn
                             ArrayList<Integer> tempBestMove = new ArrayList<>();
@@ -495,6 +523,43 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 
     }
 
+    public void calAndDisplayMessage(){
+        //Calculate and Display User's Message
+        int tempBoardScore = boardScore;
+        if (tempBoardScore == 0 ){
+            messageView.setText("You can draw");
+        }
+        if (firstPlayer == "Human"){
+            if (tempBoardScore > 0){
+                //if human first and +ve
+                int movePlayed = turnCount / 2;
+                int winMove = 22 - tempBoardScore - movePlayed;
+                messageView.setText("You can win in " + String.valueOf(winMove) + " Move(s)!");
+            }
+            else if (tempBoardScore < 0){
+                //if human first and -ve
+                int movePlayedByOpponent = turnCount / 2;
+                int loseMove = tempBoardScore + 22 - movePlayedByOpponent;
+                messageView.setText("You lose in " + String.valueOf(loseMove) + " Move(s)!");
+            }
+        }
+        else if (firstPlayer == "Robot"){
+            if (tempBoardScore > 0){
+                //if human first and +ve
+                int movePlayed = turnCount / 2 - 1;
+                int winMove = 22 - tempBoardScore - movePlayed;
+                messageView.setText("You can win in " + String.valueOf(winMove) + " Move(s)!");
+            }
+            else if (tempBoardScore < 0){
+                //if human first and -ve
+                int movePlayedByOpponent = turnCount / 2;
+                int loseMove = tempBoardScore + 22 - movePlayedByOpponent;
+                messageView.setText("You lose in " + String.valueOf(loseMove) + " Move(s)!");
+            }
+        }
+
+    };
+
     @Override
     public void onCameraViewStarted(int width, int height) {
         //Get the width and height to be displayed on the screen
@@ -539,6 +604,8 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         }
     }
 
+
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -578,5 +645,14 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
             Log.d(TAG, "OpenCV Config failed");
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, baseLoaderCallback);
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        //Back to MainActivity instead of prevActivity
+        Intent intent = new Intent(BoardActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 }

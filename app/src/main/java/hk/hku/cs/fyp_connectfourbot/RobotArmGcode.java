@@ -26,16 +26,16 @@ public class RobotArmGcode {
     static final String PICK = M3+" T-5";
     static final String PLACE = M3+" T45";
 
-//    static final String COL1 = G1+" X0 Y125 Z170";
+//    static final String COL1 = G1+" X0 Y120 Z180";
 //    static final String COL2 = G1+" X0 Y160 Z170";
 //    static final String COL3 = G1+" X0 Y190 Z160";
 //    static final String COL4 = G1+" X0 Y225 Z150";
 //    static final String COL5 = G1+" X0 Y255 Z150";
 //    static final String COL6 = G1+" X0 Y285 Z140";
-//    static final String COL7 = G1+" X0 Y310 Z130";
+//    static final String COL7 = G1+" X0 Y315 Z135";
 
     static final String MOVE_LEFT = G1+" X-90 Y225 Z180";
-    static final String DISC_POS = G1+" G1 X-90 Y210 Z-65";
+    static final String DISC_POS = G1+" X-90 Y210 Z-65";
 
 
     static final double MINX = -200;
@@ -90,10 +90,11 @@ public class RobotArmGcode {
 
     public byte[] toCol(int col) {
         mPosX = 0;
+        Log.i(TAG, "toCol");
         switch (col) {
             case 1:
-                mPosY=125;
-                mPosZ=170;
+                mPosY=120;
+                mPosZ=185;
                 break;
             case 2:
                 mPosY=160;
@@ -116,8 +117,8 @@ public class RobotArmGcode {
                 mPosZ=140;
                 break;
             case 7:
-                mPosY=310;
-                mPosZ=130;
+                mPosY=315;
+                mPosZ=135;
                 break;
         }
         return getPayload(G1 + " X" + mPosX + " Y" + mPosY + " Z" + mPosZ);
@@ -127,18 +128,21 @@ public class RobotArmGcode {
         mPosX=0;
         mPosY=225;
         mPosZ=180;
+        Log.i(TAG, "autoHome");
         return getPayload(G28);
     }
     public byte[] goLeft() {
-        mPosX=-90;
+        mPosX=-105;
         mPosY=225;
         mPosZ=180;
+        Log.i(TAG, "goLeft");
         return getPayload(MOVE_LEFT);
     }
     public byte[] goDiscPos() {
-        mPosX=-90;
-        mPosY=210;
-        mPosZ=-65;
+        mPosX=-105;
+        mPosY=225;
+        mPosZ=-45;
+        Log.i(TAG, "goDiscPos");
         return getPayload(DISC_POS);
     }
 
@@ -147,6 +151,7 @@ public class RobotArmGcode {
         mPosX=0;
         mPosY=225;
         mPosZ=180;
+        Log.i(TAG, "goHome");
         return getPayload(HOME);
     }
     public byte[] goRest() {
@@ -169,9 +174,11 @@ public class RobotArmGcode {
     }
 
     public byte[] pick() {
+        Log.i(TAG, "pick");
         return getPayload(PICK);
     }
     public byte[] place() {
+        Log.i(TAG, "place");
         return getPayload(PLACE);
     }
 

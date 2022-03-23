@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.TextureView;
+import android.view.View;
 import android.view.ViewStub;
+import android.widget.Button;
 import android.widget.Switch;
 
 import androidx.annotation.Nullable;
@@ -60,6 +62,7 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
     public ArrayList<ArrayList<ArrayList<Integer>>> trueBoard = new ArrayList<>();
     public int nextStage = 0;
     public int player;
+    Button refresh;
 
 
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -102,7 +105,7 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
         javaCameraView = (JavaCameraView) findViewById(R.id.cameraview);
         javaCameraView.setVisibility(SurfaceView.VISIBLE);
         javaCameraView.setCvCameraViewListener(AutoActivity.this);
-
+        refresh = (Button) findViewById(R.id.refresh);
 
 
 
@@ -113,8 +116,6 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     public void onCameraViewStarted(int width, int height) {
         //Get the width and height to be displayed on the screen
-        Log.d(TAG, "Width: "+Integer.toString(width));
-        Log.d(TAG, "Height: "+Integer.toString(height));
         mRGBA = new Mat(height, width, CvType.CV_8UC4);
     }
 
@@ -139,14 +140,6 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
 
             Imgproc.blur(input, input, new Size(3, 3), new Point(2, 2));
             Imgproc.cvtColor(input, cannyImg, Imgproc.COLOR_BGR2GRAY);
-//            Imgproc.Canny(Gray, cannyImg, 100, 90); //100, 80
-
-//            cannyImg.setTo(new Scalar(100,100,100));
-//            for (int row = 0; row < 190 ; row++){
-//                for (int col = 0; col <480; col++){
-//                    cannyImg.put(row, col,new);
-//                }
-//            }
 
 
             Imgproc.HoughCircles(cannyImg, circles, Imgproc.CV_HOUGH_GRADIENT, 1.0, 50, 100, 50, 1, 100);
@@ -154,12 +147,7 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
                 board = getInlines();
 
             }
-
-
-//        Log.i(TAG, String.valueOf("col: " + input.cols()) + ", " + String.valueOf(input.rows()));
-//
             if (circles.cols() > 0) {
-//            Log.i(TAG, String.valueOf("size: " + circles.cols()) + ", " + String.valueOf(circles.rows()));
                 for (int x=0; x < 100; x++ ) {
                     double circleVec[] = circles.get(0, x);
 
@@ -210,64 +198,18 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
                 boardAct.putExtra("serializable", new Payload(trueBoard, player));
                 startActivity(boardAct);
             }
-//            Imgproc.cvtColor(input, input, Imgproc.COLOR_BGR2HSV);
-//            if (count != 0){
-////            Log.i(TAG, String.valueOf("Count:"+count));
-//                count--;
-//            }
-//            else{
-//                count = 100;
-//                Log.i(TAG, String.valueOf("--------------------------------S-------------------------------------"));
-//
-//                String boardStr = "Board State: \n";
-//                for (int x=0; x < trueBoard.size() ; x++ ) {
-//                    String rowStr = "";
-//                    for (int y = 0; y < trueBoard.get(x).size(); y++){
-//                        Point p = new Point((int) trueBoard.get(x).get(y).get(0), (int) trueBoard.get(x).get(y).get(1));
-////                    Imgproc.circle(input, p, 0, new Scalar(255, 0, 0), 5);
-//                        double[] pixel = input.get(trueBoard.get(x).get(y).get(1), trueBoard.get(x).get(y).get(0));
-//                        rowStr = getColor(pixel) + " " +rowStr;
-////                    rowStr = getColor(pixel) +"("+pixel[0]+ ","+ pixel[1]+ ","+ pixel[2]+")"+ " " +rowStr;
-////                    Log.i(TAG, String.valueOf("RGB: "+ getColor(pixel)));
-////                    Log.i(TAG, String.valueOf("Pixel: "+ pixel[0]+ ","+ pixel[1]+ ","+ pixel[2]));
-////                    if (getColor(pixel) == "G"){
-////                        Imgproc.circle(input, p, 0, new Scalar(0, 128, 0), 5);
-////                    }
-////                    else if (getColor(pixel) == "R"){
-////                        Imgproc.circle(input, p, 0, new Scalar(128, 0, 0), 5);
-////                    }
-////                    else if (getColor(pixel) == "X") {
-////                        Imgproc.circle(input, p, 0, new Scalar(225, 225, 225), 5);
-////                    }
-//
-//                    }
-//                    boardStr += rowStr + "\n";
-////                Log.i(TAG, String.valueOf("--------------------------------R"+x+"-------------------------------------"));
-//                }
-//                Log.i(TAG, boardStr);
-//                Log.i(TAG, String.valueOf("--------------------------------End-------------------------------------"));
-//            }
-
-//            Imgproc.cvtColor(input, input, Imgproc.COLOR_HSV2BGR);
 
             return input;
         }
 
     }
 
-//    public String getColor(double[] rgbValue){
-//        int Hue = (int) rgbValue[0];
-//        if ( Hue > 100 ){
-//            return "P";
-//        }
-//        else if (Hue < 100 && Hue >30){
-//            return "G";
-//        }
-//        else{
-//            return "X";
-//        }
-//
-//    }
+    public void refreshRecog(View view){
+        stablePoints = new ArrayList<>();
+        locatedPoints = new ArrayList<>();
+        board = new ArrayList<>();
+        trueBoard = new ArrayList<>();
+    }
 
     public void checkBoardInit(){
         if (board.size() > 0){
@@ -415,4 +357,15 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, baseLoaderCallback);
         }
     }
+
+//    @Override
+//    public void onBackPressed(){
+//        //Back to MainActivity instead of prevActivity
+//        Intent intent = new Intent(AutoActivity.this, MainActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+//        finish();
+//    }
+
+
 }
