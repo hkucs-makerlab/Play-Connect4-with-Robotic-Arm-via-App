@@ -16,35 +16,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fyp_connectfourbot">
+        <activity android:name=".ScoreBoardActivity"></activity>
+        <activity android:name=".GameEndActivity" />
         <activity
             android:name=".SelectActivity"
-            android:label="Select Activity"></activity>
+            android:label="Select Activity" />
         <activity
             android:name=".DrawingActivity"
-            android:label="Building Mode"></activity>
+            android:label="Building Mode" />
         <activity
             android:name=".BuildingActivity"
-            android:label="Building Mode"></activity>
+            android:label="Building Mode" />
         <activity
             android:name=".ControllerActivity"
-            android:label="Arm Controller"></activity>
+            android:label="Arm Controller" />
         <activity
             android:name=".ManualActivity"
-            android:label="Manual Mode Activity"></activity>
+            android:label="Manual Mode Activity" />
         <activity
             android:name=".AutoActivity"
-            android:label="Auto Mode Activity"></activity>
+            android:label="Auto Mode Activity" />
         <activity
             android:name=".BoardActivity"
-            android:label="Board Activity"></activity>
+            android:label="Board Activity" />
         <activity
             android:name="com.makerlab.ui.BluetoothDevListActivity"
-            android:label="Scanning Bluetooth Devices"></activity>
+            android:label="Scanning Bluetooth Devices" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Fyp_connectfourbot.NoActionBar"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Fyp_connectfourbot.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

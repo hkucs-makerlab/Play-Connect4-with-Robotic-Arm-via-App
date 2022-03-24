@@ -55,6 +55,8 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     public int turnCount = 1;
     public int playerScore = 0;
     public int boardScore = 1;
+    public int height = 5;
+    public int width = 6;
     public String realStr = "";
 
     public ArrayList<ArrayList<ArrayList<Integer>>> trueBoard = new ArrayList<>();
@@ -200,12 +202,10 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
 
         Mat input = inputFrame.rgba();
-//        Log.d(TAG, "You're in board");
         Imgproc.cvtColor(input, input, Imgproc.COLOR_BGR2HSV);
 
 
         if (count != 0){
-//            Log.i(TAG, String.valueOf("Count:"+count));
             count--;
 
         }
@@ -217,7 +217,6 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                 String rowStr = "";
                 for (int y = 0; y < trueBoard.get(x).size(); y++){
                     Point p = new Point((int) trueBoard.get(x).get(y).get(0), (int) trueBoard.get(x).get(y).get(1));
-//                    Imgproc.circle(input, p, 0, new Scalar(255, 0, 0), 5);
                     double[] pixel = input.get(trueBoard.get(x).get(y).get(1), trueBoard.get(x).get(y).get(0));
                     rowStr = getColor(pixel) + " " +rowStr;
                     if(!initialReading){
@@ -273,39 +272,11 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
             Log.i(TAG, "player:"+firstPlayer);
             String tempStr = firstPlayer+" takes the turn";
             turnView.setText(tempStr);
-//            if (firstPlayer=="Robot") { //it is robot turn
-//                if (turnCount==1){
-//                    //ask robot to pick and place col 4
-//                    robotMove(4);
-//
-//                } else{
-//                    ArrayList<Integer> tempBestMove = new ArrayList<>();
-//                    for(int i = 0; i < bestMove.size(); i++){
-//                        if(bestMove.get(i) == 1){
-//                            tempBestMove.add(i+1);
-//                        }
-//                    }
-//                    Collections.shuffle(tempBestMove);
-//                    //ask robot to pick and place col tempBestMove.get(0);
-//                    robotMove(tempBestMove.get(0));
-//                }
-//            }
         }
         else if(order == 0){
             Log.i(TAG, "player:"+secondPlayer);
             String tempStr = secondPlayer+" takes the turn";
             turnView.setText(tempStr);
-//            if (secondPlayer=="Robot") { //it is robot turn
-//                ArrayList<Integer> tempBestMove = new ArrayList<>();
-//                for(int i = 0; i < bestMove.size(); i++){
-//                    if(bestMove.get(i) == 1){
-//                        tempBestMove.add(i+1);
-//                    }
-//                }
-//                Collections.shuffle(tempBestMove);
-//                //ask robot to pick and place col tempBestMove.get(0);
-//                robotMove(tempBestMove.get(0));
-//            }
         }
 
     }
@@ -329,7 +300,6 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     public void showHints(View view){
 //        Log.d(TAG, "Sequence: "+sequence);
         String displayString = "";
-//        getBestMove();
         for(int i = 0; i < bestMove.size(); i++){
             if(bestMove.get(i) == 1){
                 displayString += "O" + ",";
@@ -406,11 +376,12 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                         tempCol = preState.get(col);    //Set new state to preState
                         tempCol.set(row, currentState.get(col).get(row));
                         preState.set(col, tempCol);
-
-                        sequence += String.valueOf(6-col+1);    //Update sequence
+                        int colorCode = preState.get(col).get(row);
+                        sequence += String.valueOf(height-col+1);    //Update sequence
 
 
                         updateScore(col, row);  //if human player's turn
+                        checkWinning(6 - col, 5 - row, colorCode); //Flip vertically and horizontally
                         getBestMove();  //Get new best move
 
                         turnCount++;
@@ -438,6 +409,100 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         }
 
     }
+
+    public void checkWinning(int col, int row, int colorCode){
+        boolean win = false;
+        boolean draw = false;
+        int finishStatus = 0; //default robot win
+        String prevPLayer = "";
+
+        int pos = 0;
+        int neg = 0;
+
+        if (turnCount%2 == playerCode){
+            prevPLayer = "Human";
+        }
+        else {
+            prevPLayer = "Robot";
+        }
+
+        //check if the game has ended and which player won
+        if (row <= 2){
+            //check vertical
+            if (preState.get(col).get(height - row + 1) == colorCode && preState.get(col).get(height - row + 2) == colorCode && preState.get(col).get(height - row + 3) == colorCode){
+                //check 3 discs below current disc
+                win = true;
+                if (prevPLayer == "Human"){
+                    finishStatus = 1;
+                }
+            }
+        }
+
+        for (int i = 0; i <= 3; i++){
+            //check horizontal
+            if (preState.get(i).get(row) == colorCode && preState.get(i+1).get(row) == colorCode && preState.get(i+2).get(row) == colorCode && preState.get(i+3).get(row) == colorCode){
+                win = true;
+                if (prevPLayer == "Human"){
+                    finishStatus = 1;
+                }
+            }
+        }
+
+        //check diagonal
+        for (int dy = -1; dy <= 1 ; dy++){
+            for (int dx = -1; dx <= 1; dx++){
+                int step = 0;
+                if (dx == -1 && dy == -1){
+                    step = Math.min(col, row);
+                }
+                if (dx == 1 && dy == 1){
+                    step = Math.min(6 - col, 5 - row);
+                }
+                if (dx == -1 && dy == 1){
+                    step = Math.min(col, 5 - row);
+                }
+                if (dx == 1 && dy == -1) {
+                    step = Math.min(6 - col, row);
+                }
+                for (int i = 1; i <= step; i++){
+                    if (preState.get(col + dx*i).get(5 - (row + dy*i)) == colorCode){
+                        if (dx/dy == 1){
+                            pos += 1;
+                        }
+                        else{
+                            neg += 1;
+                        }
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (pos >= 3 || neg >= 3){
+            win = true;
+            if (prevPLayer == "Human"){
+                finishStatus = 1;
+            }
+        }
+
+        //check if the game has ended and it is a draw
+        if (turnCount == 42 && !win){
+            draw = true;
+            finishStatus = 2;
+        }
+
+        //If the game is finished, proceed to GameEndActivity
+        if (win || draw){
+            Intent gameEndAct = new Intent(BoardActivity.this, GameEndActivity.class);
+            gameEndAct.putExtra("score", playerScore);
+            gameEndAct.putExtra("finishStatus", finishStatus);
+            startActivity(gameEndAct);
+        }
+
+    }
+
 
     public boolean isValidBoard(){
         Integer changedPos = 0;
