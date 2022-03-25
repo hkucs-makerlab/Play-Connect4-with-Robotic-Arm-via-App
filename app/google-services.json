@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "682151482505",
+    "project_id": "fyp-connect4bot-dc02c",
+    "storage_bucket": "fyp-connect4bot-dc02c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682151482505:android:ea4de8e1023b49d47b6258",
+        "android_client_info": {
+          "package_name": "hk.hku.cs.fyp_connectfourbot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682151482505-dgtlut3ch04vq1j5lkvb7i6c8lblol5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0rvVKoTs8wVbg34fvV1BTfcEMi-rZMnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682151482505-dgtlut3ch04vq1j5lkvb7i6c8lblol5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

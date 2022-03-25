@@ -317,6 +317,7 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
     }
 
     public void launchSelectActivity(View view){
+//        Intent selectModeAct = new Intent(this, SelectActivity.class);
         Intent selectModeAct = new Intent(this, SelectActivity.class);
         startActivity(selectModeAct);
     }
@@ -339,9 +340,9 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
         startActivity(buildingModeAct);
     }
 
-    public void launchDrawingActivity(View view) {
-        Intent drawingAct = new Intent(this, DrawingActivity.class);
-        startActivity(drawingAct);
+    public void launchScoreBoardActivity(View view) {
+        Intent scoreBoardAct = new Intent(this, ScoreBoardActivity.class);
+        startActivity(scoreBoardAct);
     }
     
     public void launchControllerActivity(View view) {
@@ -473,7 +474,8 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
         MainActivityButton.setEnabled(true);
         MainActivityButton = findViewById(R.id.controller);
         MainActivityButton.setEnabled(flag);
-//        MainActivityButton = findViewById(R.id.draw);
+        MainActivityButton = findViewById(R.id.draw);
+        MainActivityButton.setEnabled(true);
 //        MainActivityButton.setEnabled(flag);
         MainActivityButton = findViewById(R.id.build);
         MainActivityButton.setEnabled(flag);

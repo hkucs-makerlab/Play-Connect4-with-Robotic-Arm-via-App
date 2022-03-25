@@ -4,23 +4,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameEndActivity extends AppCompatActivity {
 
-    int score;
+    int score =0;
     int finishStatus;
     TextView scoreView;
     TextView gameEndView;
+    EditText playerNameView;
+    Button submitButton;
+    static private String TAG = GameEndActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_end);
-        score = getIntent().getIntExtra("score", 0);
+        score = getIntent().getIntExtra("score", 20);
         finishStatus = getIntent().getIntExtra("finishStatus", 0);
         scoreView = findViewById(R.id.score);
         gameEndView = findViewById(R.id.gameEndView);
+        playerNameView = findViewById(R.id.playerNameView);
+        submitButton = findViewById(R.id.submitButton);
 
         scoreView.setText(String.valueOf(score));
         if (finishStatus == 0){
@@ -32,6 +43,22 @@ public class GameEndActivity extends AppCompatActivity {
         else if (finishStatus == 2){
             gameEndView.setText("Draw!!");
         }
+        DBPlayerData dbPlayerData = new DBPlayerData();
+        submitButton.setOnClickListener(v->{
+            Log.i(TAG, "Clicked");
+
+            PlayerData pd = new PlayerData(playerNameView.getText().toString(), score);
+            if(pd != null){
+                Log.i(TAG, String.valueOf(pd.getName()+pd.getScore()));
+            }
+            dbPlayerData.add(pd).addOnSuccessListener(suc->{
+                Toast.makeText(this, "Record is inserted", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(GameEndActivity.this, ScoreBoardActivity.class);
+                startActivity(intent);
+            }).addOnFailureListener(er->{
+                Toast.makeText(this, ""+er.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+        });
     }
 
     @Override
@@ -42,4 +69,5 @@ public class GameEndActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }
