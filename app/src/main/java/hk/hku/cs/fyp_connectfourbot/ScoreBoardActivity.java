@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ScoreBoardActivity extends AppCompatActivity {
 
@@ -43,17 +44,37 @@ public class ScoreBoardActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 ArrayList<PlayerData> pds = new ArrayList<>();
+                ArrayList<PlayerData> sortedPds = new ArrayList<>();
                 for (DataSnapshot data: snapshot.getChildren()){
                     PlayerData pd = data.getValue(PlayerData.class);
                     pds.add(pd);
                 }
-                adapter.setItems(pds);
+                sortedPds = sort(pds);
+                adapter.setItems(sortedPds);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+
+            public ArrayList<PlayerData> sort(ArrayList<PlayerData> pds){
+                ArrayList<PlayerData> pdsCopy = pds;
+                int size = pdsCopy.size();
+                for (int i = 0; i < size; i++){
+                    int minIndex = i;
+                    for (int j = i + 1; j < size ; j++){
+                        if (pdsCopy.get(minIndex).getScore() > pdsCopy.get(j).getScore()){
+                            minIndex = j;
+                        }
+                    }
+                    PlayerData tempPd = pdsCopy.get(i);
+                    pdsCopy.set(i, pdsCopy.get(minIndex));
+                    pdsCopy.set(minIndex, tempPd);
+                }
+                Collections.reverse(pdsCopy);
+                return pdsCopy;
             }
         });
     }
