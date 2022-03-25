@@ -45,9 +45,26 @@
             android:text="Arm Controller"
             app:layout_constraintBottom_toTopOf="@+id/build"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auto" />
+
+        <android.widget.Button
+
+            android:id="@+id/build"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/main_activity_button"
+
+            android:onClick="launchBuildingActivity"
+            android:text="Building Mode"
+            app:layout_constraintBottom_toTopOf="@+id/draw"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/controller" />
 
         <android.widget.Button
             android:id="@+id/draw"
@@ -58,26 +75,11 @@
             android:background="@drawable/main_activity_button"
             android:onClick="launchScoreBoardActivity"
             android:text="Score Board"
-            app:layout_constraintBottom_toTopOf="@+id/build"
+            app:layout_constraintBottom_toTopOf="@+id/bluetooth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/controller" />
-
-        <android.widget.Button
-            android:id="@+id/build"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/main_activity_button"
-            android:onClick="launchBuildingActivity"
-            android:text="Building Mode"
-            app:layout_constraintBottom_toTopOf="@+id/bluetooth"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/controller" />
+            app:layout_constraintTop_toBottomOf="@+id/build" />
 
         <ImageButton
             android:id="@+id/bluetooth"
@@ -90,7 +92,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/build"
+            app:layout_constraintTop_toBottomOf="@+id/draw"
             app:srcCompat="@drawable/ic_baseline_bluetooth_24" />
 
         <!--        <android.widget.Button-->
