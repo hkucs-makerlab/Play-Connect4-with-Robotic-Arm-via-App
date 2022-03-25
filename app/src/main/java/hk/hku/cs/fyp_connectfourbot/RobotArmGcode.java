@@ -23,7 +23,7 @@ public class RobotArmGcode {
     static final String REST = G1+" X0 Y145 Z70";
     static final String BOTTOM = G1+" X0 Y170 Z0";
     static final String END_STOP =G1+" X0 Y70 Z134";
-    static final String PICK = M3+" T-5";
+    static final String PICK = M3+" T-10";
     static final String PLACE = M3+" T45";
 
 //    static final String COL1 = G1+" X0 Y120 Z180";
@@ -34,8 +34,8 @@ public class RobotArmGcode {
 //    static final String COL6 = G1+" X0 Y285 Z140";
 //    static final String COL7 = G1+" X0 Y315 Z135";
 
-    static final String MOVE_LEFT = G1+" X-90 Y225 Z180";
-    static final String DISC_POS = G1+" X-90 Y210 Z-65";
+    static final String MOVE_LEFT = G1+" X-105 Y225 Z180";
+    static final String DISC_POS = G1+" X-105 Y225 Z-45";
 
 
     static final double MINX = -200;
@@ -114,7 +114,7 @@ public class RobotArmGcode {
                 break;
             case 6:
                 mPosY=285;
-                mPosZ=140;
+                mPosZ=145;
                 break;
             case 7:
                 mPosY=315;

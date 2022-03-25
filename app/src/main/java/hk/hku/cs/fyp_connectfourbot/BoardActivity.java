@@ -172,6 +172,15 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 
         }
 
+        for ( int r = 0; r < 6; r++) {
+            String tempRow = "";
+            for (int c = 0; c < 7; c++) {
+                tempRow += "X ";
+            }
+            realStr += tempRow + "\n";
+        }
+        updateText();
+
         Thread t = new Thread() {
 
             @Override
@@ -182,7 +191,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                updateText(); //Update board State on Screen
+//                                updateText(); //Update board State on Screen
                                 updateSequence(); //Update the new sequence if there are any changes
                                 updateTurn(); //Update the turn display if turn changed
 
@@ -236,7 +245,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                 }
 
             }
-            realStr = boardStr;
+//            realStr = boardStr;
 
             initialReading = true;
 
@@ -269,12 +278,12 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         int order = turnCount%2;
 
         if (order == 1){
-            Log.i(TAG, "player:"+firstPlayer);
+//            Log.i(TAG, "player:"+firstPlayer);
             String tempStr = firstPlayer+" takes the turn";
             turnView.setText(tempStr);
         }
         else if(order == 0){
-            Log.i(TAG, "player:"+secondPlayer);
+//            Log.i(TAG, "player:"+secondPlayer);
             String tempStr = secondPlayer+" takes the turn";
             turnView.setText(tempStr);
         }
@@ -319,22 +328,25 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         int max;
         if (sequence != ""){
             String scoreResults = mCppActivity.mystringFromJNI(sequence);
-            String[] splitText = scoreResults.split(",");
-            for(int i = 0; i < splitText.length; i++){
-                scores.add(Integer.valueOf(splitText[i]));
-            }
-            max = Collections.max(scores);
-            boardScore = Collections.max(scores);
-            for(int i = 0; i < scores.size(); i++){
-                if(scores.get(i) == max){
-                    tempMoves.add(1);
+            if (scoreResults != "0123456"){
+                String[] splitText = scoreResults.split(",");
+                for(int i = 0; i < splitText.length; i++){
+                    scores.add(Integer.valueOf(splitText[i]));
                 }
-                else {
-                    tempMoves.add(0);
+                max = Collections.max(scores);
+                boardScore = Collections.max(scores);
+                for(int i = 0; i < scores.size(); i++){
+                    if(scores.get(i) == max){
+                        tempMoves.add(1);
+                    }
+                    else {
+                        tempMoves.add(0);
+                    }
                 }
+                bestMove = tempMoves;
+                Log.i(TAG, scoreResults);
             }
-            bestMove = tempMoves;
-            Log.i(TAG, scoreResults);
+
         }
     }
 
@@ -377,14 +389,35 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                         tempCol.set(row, currentState.get(col).get(row));
                         preState.set(col, tempCol);
                         int colorCode = preState.get(col).get(row);
-                        sequence += String.valueOf(height-col+1);    //Update sequence
+                        Log.i(TAG, String.valueOf("Col:"+col+" Row:"+row));
+                        Log.i(TAG, String.valueOf("ColorCode:"+colorCode));
+                        sequence += String.valueOf(6-col+1);    //Update sequence
 
 
                         updateScore(col, row);  //if human player's turn
-                        checkWinning(6 - col, 5 - row, colorCode); //Flip vertically and horizontally
+                        checkWinning(6 - col, row, colorCode); //Flip vertically and horizontally
                         getBestMove();  //Get new best move
-
+                        realStr = "";
+                        for ( int r = 5; r >= 0; r--) {
+                            String tempRow = "";
+                            for (int c = 6; c >= 0; c--) {
+                                if (preState.get(c).get(r) == 1){
+                                    tempRow += "G ";
+                                }
+                                else if (preState.get(c).get(r) == 2){
+                                    tempRow += "P ";
+                                }
+                                else if (preState.get(c).get(r) == 0){
+                                    tempRow += "X ";
+                                }
+                            }
+                            realStr += tempRow + "\n";
+                        }
+                        updateText();
                         turnCount++;
+
+
+
                         //Turn ends
 
                         if (turnCount%2 == playerCode){//if human player's turn
@@ -393,14 +426,16 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 
                         if (turnCount%2 != playerCode){ //if robot player's turn
                             ArrayList<Integer> tempBestMove = new ArrayList<>();
-                            for(int i = 0; i < bestMove.size(); i++){
-                                if(bestMove.get(i) == 1){
-                                    tempBestMove.add(i+1);
+                            if(bestMove.size() > 0){
+                                for(int i = 0; i < bestMove.size(); i++){
+                                    if(bestMove.get(i) == 1){
+                                        tempBestMove.add(i+1);
+                                    }
                                 }
+                                Collections.shuffle(tempBestMove);
+                                //ask robot to pick and place col tempBestMove.get(0);
+                                robotMove(tempBestMove.get(0));
                             }
-                            Collections.shuffle(tempBestMove);
-                            //ask robot to pick and place col tempBestMove.get(0);
-                            robotMove(tempBestMove.get(0));
                         }
 
                     }
@@ -415,6 +450,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         boolean draw = false;
         int finishStatus = 0; //default robot win
         String prevPLayer = "";
+        Log.i(TAG, String.valueOf("Col:"+col+" Row:"+row+"colorCode:"+colorCode));
 
         int pos = 0;
         int neg = 0;
@@ -427,9 +463,12 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         }
 
         //check if the game has ended and which player won
-        if (row <= 2){
+        if (row >= 3){
+            Log.i(TAG, String.valueOf(preState.get(6 - col).get(row - 1)));
+            Log.i(TAG, String.valueOf(preState.get(6 - col).get(row - 2)));
+            Log.i(TAG, String.valueOf(preState.get(6 - col).get(row - 3)));
             //check vertical
-            if (preState.get(col).get(height - row + 1) == colorCode && preState.get(col).get(height - row + 2) == colorCode && preState.get(col).get(height - row + 3) == colorCode){
+            if (preState.get(6 - col).get(row - 1) == colorCode && preState.get(6 - col).get(row - 2) == colorCode && preState.get(6 - col).get(row - 3) == colorCode){
                 //check 3 discs below current disc
                 win = true;
                 if (prevPLayer == "Human"){
@@ -465,7 +504,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                     step = Math.min(6 - col, row);
                 }
                 for (int i = 1; i <= step; i++){
-                    if (preState.get(col + dx*i).get(5 - (row + dy*i)) == colorCode){
+                    if (preState.get(6- (col + dx*i)).get(row + dy*i) == colorCode){
                         if (dx/dy == 1){
                             pos += 1;
                         }
@@ -495,10 +534,11 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 
         //If the game is finished, proceed to GameEndActivity
         if (win || draw){
-            Intent gameEndAct = new Intent(BoardActivity.this, GameEndActivity.class);
+            Intent gameEndAct = new Intent(this, GameEndActivity.class);
             gameEndAct.putExtra("score", playerScore);
             gameEndAct.putExtra("finishStatus", finishStatus);
             startActivity(gameEndAct);
+            Log.i(TAG, String.valueOf("score:"+playerScore+" finishStatus:"+finishStatus));
         }
 
     }
