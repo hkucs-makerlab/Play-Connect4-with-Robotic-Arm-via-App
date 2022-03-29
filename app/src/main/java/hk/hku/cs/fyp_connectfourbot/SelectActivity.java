@@ -31,18 +31,18 @@ public class SelectActivity extends AppCompatActivity {
 
 
     public void clickedYouButton(View view){
-        launchAutoActivity(1);
+        launchReminderActivity(1);
     }
 
     public void clickedRobotButton(View view){
-        launchAutoActivity(0);
+        launchReminderActivity(0);
     }
 
-    public void launchAutoActivity(int player) {
+    public void launchReminderActivity(int player) {
 //        Log.d(TAG, "Launch Auto Activity");
-        Intent autoModeAct = new Intent(this, AutoActivity.class);
-        autoModeAct.putExtra("player", player);
-        startActivity(autoModeAct);
+        Intent readyModeAct = new Intent(this, ReminderActivity.class);
+        readyModeAct.putExtra("player", player);
+        startActivity(readyModeAct);
     }
 
     //do autohome while player is selecting play order
@@ -80,8 +80,4 @@ public class SelectActivity extends AppCompatActivity {
         finish();
     }
 
-//    public DialogInterface.OnClickListener doNothing(){
-//
-//        return null;
-//    }
 }
