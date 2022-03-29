@@ -18,12 +18,12 @@ public class SelectActivity extends AppCompatActivity {
     private static RobotArmGcode mRobotArmGcode = new RobotArmGcode();
     AlertDialog.Builder builder;
 
-    Button humanPlayer;
-    Button robotPlayer;
+//    Button humanPlayer;
+//    Button robotPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        humanPlayer = findViewById(R.id.youButton);
-        robotPlayer = findViewById(R.id.robotButton);
+//        humanPlayer = findViewById(R.id.youButton);
+//        robotPlayer = findViewById(R.id.robotButton);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
         builder = new AlertDialog.Builder(SelectActivity.this);
