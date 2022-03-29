@@ -341,8 +341,12 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
     }
 
     public void launchScoreBoardActivity(View view) {
-        Intent scoreBoardAct = new Intent(this, ScoreBoardActivity.class);
-        startActivity(scoreBoardAct);
+//        Intent scoreBoardAct = new Intent(this, ScoreBoardActivity.class);
+//        startActivity(scoreBoardAct);
+        Intent gameEndAct = new Intent(this, GameEndActivity.class);
+        gameEndAct.putExtra("score", 25);
+        gameEndAct.putExtra("finishStatus", 2);
+        startActivity(gameEndAct);
     }
     
     public void launchControllerActivity(View view) {

@@ -5,7 +5,7 @@
     <!--    <stroke-->
     <!--        android:width="2dp"-->
     <!--        android:color="@color/design_default_color_primary"/>-->
-    <gradient android:startColor="@color/pink_200" android:endColor="@color/teal_200" android:type="linear" />
+    <gradient android:startColor="@color/pink_200" android:endColor="@color/home_teal" android:type="linear" />
 <!--    <gradient android:startColor="@color/secondaryLightColor" android:endColor="@color/primaryLightColor" android:type="linear" />-->
     <corners android:radius="30dp" />
 

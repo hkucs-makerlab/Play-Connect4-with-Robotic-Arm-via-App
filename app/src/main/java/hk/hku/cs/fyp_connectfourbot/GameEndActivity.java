@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ public class GameEndActivity extends AppCompatActivity {
     TextView scoreView;
     TextView gameEndView;
     EditText playerNameView;
+    ImageView mImageView;
     Button submitButton;
     static private String TAG = GameEndActivity.class.getSimpleName();
 
@@ -30,17 +32,21 @@ public class GameEndActivity extends AppCompatActivity {
         finishStatus = getIntent().getIntExtra("finishStatus", 0);
         scoreView = findViewById(R.id.score);
         gameEndView = findViewById(R.id.gameEndView);
+        mImageView = findViewById(R.id.gameEndImageView);
         playerNameView = findViewById(R.id.playerNameView);
         submitButton = findViewById(R.id.submitButton);
 
         scoreView.setText(String.valueOf(score));
         if (finishStatus == 0){
-            gameEndView.setText("You Lose");
+            mImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_icons8_sad_96));
+            gameEndView.setText("You Lose!!");
         }
         else if (finishStatus == 1){
+            mImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_icons8_happy_96));
             gameEndView.setText("You Win!!");
         }
         else if (finishStatus == 2){
+            mImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_icons8_neutral_96));
             gameEndView.setText("Draw!!");
         }
         DBPlayerData dbPlayerData = new DBPlayerData();
