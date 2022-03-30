@@ -30,7 +30,7 @@ public class GameEndActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_end);
         score = getIntent().getIntExtra("score", 20);
         finishStatus = getIntent().getIntExtra("finishStatus", 0);
-        scoreView = findViewById(R.id.score);
+        scoreView = findViewById(R.id.gameEndScore);
         gameEndView = findViewById(R.id.gameEndView);
         mImageView = findViewById(R.id.gameEndImageView);
         playerNameView = findViewById(R.id.playerNameView);

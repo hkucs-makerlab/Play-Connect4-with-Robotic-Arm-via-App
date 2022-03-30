@@ -132,8 +132,10 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
         int x_c = 0, y_c = 0, width = 100, height = 100;
 
         Mat input = inputFrame.rgba();
-        Imgproc.rectangle(input, new Point(190, 480), new Point(0, 0), new Scalar(225, 225, 225), -1);
-        Imgproc.rectangle(input, new Point(720, 480), new Point(500, 0), new Scalar(225, 225, 225), -1);
+        Imgproc.rectangle(input, new Point(190, 480), new Point(0, 0), new Scalar(255, 255, 255), -1);
+        Imgproc.rectangle(input, new Point(720, 480), new Point(500, 0), new Scalar(255, 255, 255), -1);
+        Imgproc.rectangle(input, new Point(190, 0), new Point(500, 20), new Scalar(225, 225, 225), -1);
+        Imgproc.rectangle(input, new Point(190, 460), new Point(500, 480), new Scalar(225, 225, 225), -1);
         checkBoardInit();
         if (!boardInit){
             Mat Gray = new Mat();

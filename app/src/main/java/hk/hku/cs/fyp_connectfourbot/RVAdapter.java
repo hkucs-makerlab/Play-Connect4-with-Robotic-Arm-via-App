@@ -33,6 +33,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         PlayerDataVH vh = (PlayerDataVH) holder;
         PlayerData pd = list.get(position);
+        vh.rank.setText(String.valueOf(position+1));
         vh.name.setText(pd.getName());
         vh.score.setText(String.valueOf(pd.getScore()));
     }

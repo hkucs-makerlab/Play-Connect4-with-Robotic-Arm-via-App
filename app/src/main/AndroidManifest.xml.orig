@@ -16,12 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fyp_connectfourbot">
-        <activity android:name=".ReminderActivity"
-            android:label="Instructions"></activity>
+<<<<<<< HEAD
+        <activity android:name=".ReminderActivity"></activity>
+        <activity android:name=".ScoreBoardActivity" />
+        <activity android:name=".GameEndActivity" />
+=======
         <activity android:name=".ScoreBoardActivity"
             android:label="Score Board"></activity>
         <activity android:name=".GameEndActivity"
             android:label="Game Ends" />
+>>>>>>> benny
         <activity
             android:name=".SelectActivity"
             android:label="Select First Player" />
