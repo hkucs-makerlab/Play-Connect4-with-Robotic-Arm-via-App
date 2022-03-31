@@ -8,86 +8,74 @@
     android:layout_marginEnd="24dp"
     tools:context=".ReminderActivity">
 
-    <LinearLayout
-        android:id="@+id/textImageInstruction1"
+    <TextView
+        android:id="@+id/instruction1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:text="1. Wait until auto-home finishes"
+        android:textAlignment="center"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/instruction1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="1. Wait until auto-home finishes"
-            android:textAlignment="center"
-            android:textSize="24sp" />
-
-        <ImageView
-            android:id="@+id/robotArmImageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:srcCompat="@drawable/ic_robot_arm_120" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/textImageInstruction2"
+    <ImageView
+        android:id="@+id/robotArmImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/textImageInstruction1"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-        <TextView
-            android:id="@+id/instruction2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="2. Lift up the game board"
-            android:textAlignment="center"
-            android:textSize="24sp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/instruction1"
+        app:srcCompat="@drawable/ic_robot_arm_120" />
 
-        <ImageView
-            android:id="@+id/connect4ImageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:srcCompat="@drawable/ic_connect4_120" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/textImageInstruction3"
+    <TextView
+        android:id="@+id/instruction2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/textImageInstruction2"
+        android:text="2. Lift up the game board"
+        android:textAlignment="center"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/robotArmImageView"
+        android:layout_marginTop="24dp" />
 
-        <TextView
-            android:id="@+id/instruction3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="3. Put the phone on the holder"
-            android:textAlignment="center"
-            android:textSize="24sp" />
+    <ImageView
+        android:id="@+id/connect4ImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/instruction2"
+        app:srcCompat="@drawable/ic_connect4_120" />
 
-        <ImageView
-            android:id="@+id/phoneStandImageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:srcCompat="@drawable/ic_phone_stand_120" />
-    </LinearLayout>
+
+    <TextView
+        android:id="@+id/instruction3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="3. Put the phone on the holder"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/connect4ImageView"
+        android:layout_marginTop="24dp" />
+
+    <ImageView
+        android:id="@+id/phoneStandImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/instruction3"
+        app:srcCompat="@drawable/ic_phone_stand_120" />
+
 
     <TextView
         android:id="@+id/instruction4"
@@ -96,9 +84,10 @@
         android:text="4. Move the phone to a position that captures the board"
         android:textAlignment="center"
         android:textSize="24sp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textImageInstruction3" />
+        app:layout_constraintTop_toBottomOf="@+id/phoneStandImageView" />
 
     <Button
         android:id="@+id/readyButton"
