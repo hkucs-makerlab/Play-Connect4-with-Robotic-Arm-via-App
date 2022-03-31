@@ -7,28 +7,32 @@
     tools:context=".BoardActivity">
 
 
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/constraintLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:visibility="invisible">-->
+
+<!--        <org.opencv.android.JavaCameraView-->
+<!--            android:id="@+id/cameraview1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.0" />-->
+
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible">
-
-        <org.opencv.android.JavaCameraView
-            android:id="@+id/cameraview1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="-16dp" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+<!--        <TextView
             android:id="@+id/hintsView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,100 +41,8 @@
             app:layout_constraintBottom_toTopOf="@+id/hintsButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/include" />-->
 
-        <TextView
-            android:id="@+id/messageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="13dp"
-            android:layout_marginTop="53dp"
-            android:text="Welcome"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/hintsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="showHints"
-            android:text="Show Hints"
-            app:layout_constraintBottom_toTopOf="@+id/scoreDescription"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hintsView"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Board"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="66dp"
-            android:layout_height="65dp"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="30dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_compass" />
-
-        <TextView
-            android:id="@+id/scoreDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="143dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="6dp"
-            android:text="Your Score: "
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/scoreView"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/scoreView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="160dp"
-            android:layout_marginBottom="5dp"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/turnView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            android:text="Robot takes the turn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/messageView" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/hintsView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hints"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                    app:layout_constraintBottom_toTopOf="@+id/hintsButton"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/include" />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/robotTalk"
             android:layout_width="match_parent"
@@ -181,10 +93,10 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
-                android:gravity="center"
-                android:text="You can win in 20 moves!"
+                android:text="Welcome"
                 android:textAlignment="center"
-                android:textSize="20sp"
+                android:gravity="center"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textbubble"
                 app:layout_constraintEnd_toEndOf="@+id/textbubble"
                 app:layout_constraintStart_toStartOf="@+id/textbubble"
@@ -326,7 +238,7 @@
             android:id="@+id/hintsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:onClick="showHints"
             android:text="Show Hints"
             android:textSize="16sp"
@@ -336,37 +248,37 @@
             tools:ignore="MissingConstraints" />
 
 
-        <!--        <androidx.gridlayout.widget.GridLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="24dp"
-                    android:background="@drawable/game_end_card"
-                    android:padding="4dp"
-                    app:columnCount="7"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView"
-                    app:rowCount="6"
-                    tools:showIn="@layout/activity_board_1">
+<!--        <androidx.gridlayout.widget.GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/game_end_card"
+            android:padding="4dp"
+            app:columnCount="7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:rowCount="6"
+            tools:showIn="@layout/activity_board_1">
 
-                    <include layout="@layout/board" />
+            <include layout="@layout/board" />
 
-                </androidx.gridlayout.widget.GridLayout>-->
+        </androidx.gridlayout.widget.GridLayout>
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Board"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.8"
-                    tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Board"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.8"
+            tools:ignore="MissingConstraints" />-->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/currentScoreCardView"
@@ -401,11 +313,11 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:text="Current Score:"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/currentScoreCardImageView"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -414,6 +326,7 @@
                     android:id="@+id/scoreView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="0"
                     android:textSize="48sp"
                     android:textStyle="bold"
@@ -423,7 +336,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-<!--        <TextView
+        <!--<TextView
             android:id="@+id/scoreDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -446,5 +359,6 @@
             app:layout_constraintEnd_toEndOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

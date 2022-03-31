@@ -4,25 +4,111 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
     tools:context=".ReminderActivity">
 
-    <TextView
-        android:id="@+id/Reminder"
+    <LinearLayout
+        android:id="@+id/textImageInstruction1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please put up the board"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/instruction1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="1. Wait until auto-home finishes"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/robotArmImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:srcCompat="@drawable/ic_robot_arm_120" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/textImageInstruction2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/textImageInstruction1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/instruction2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="2. Lift up the game board"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/connect4ImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:srcCompat="@drawable/ic_connect4_120" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/textImageInstruction3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/textImageInstruction2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/instruction3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="3. Put the phone on the holder"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/phoneStandImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:srcCompat="@drawable/ic_phone_stand_120" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/instruction4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4. Move the phone to a position that captures the board"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textImageInstruction3" />
 
     <Button
         android:id="@+id/readyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I am ready!"
         android:onClick="launchAutoActivity"
+        android:text="I am ready!"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Reminder" />
+        app:layout_constraintTop_toBottomOf="@+id/instruction4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

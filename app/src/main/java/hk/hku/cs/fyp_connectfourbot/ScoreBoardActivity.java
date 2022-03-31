@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 
@@ -17,7 +16,6 @@ import java.util.Collections;
 
 public class ScoreBoardActivity extends AppCompatActivity {
 
-    SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
     RVAdapter adapter;
     DBPlayerData dbp;
@@ -26,7 +24,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score_board);
-        swipeRefreshLayout = findViewById(R.id.swip);
         recyclerView = findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);

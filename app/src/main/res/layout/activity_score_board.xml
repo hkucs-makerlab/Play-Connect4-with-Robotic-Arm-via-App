@@ -6,15 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ScoreBoardActivity">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swip">
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rv"/>
+        android:layout_marginTop="8dp"
+        />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

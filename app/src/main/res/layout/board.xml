@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.gridlayout.widget.GridLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginTop="16dp"
+    android:padding="4dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/cardView"
+    android:background="@drawable/game_end_card"
+    app:columnCount="7"
+    app:rowCount="6"
+    tools:showIn="@layout/activity_board">
+<!--<merge xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools">-->
+
+
+    <include
+        android:id="@+id/disc00"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="0"
+        app:layout_row="5" />
+
+    <include
+        android:id="@+id/disc01"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="1"
+        app:layout_row="5" />
+
+    <include
+        android:id="@+id/disc02"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="2"
+        app:layout_row="5" />
+
+    <include
+        android:id="@+id/disc03"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="3"
+        app:layout_row="5" />
+
+    <include
+        android:id="@+id/disc04"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="4"
+        app:layout_row="5" />
+
+    <include
+        android:id="@+id/disc05"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="5"
+        app:layout_row="5" />
+
+    <include
+        android:id="@+id/disc06"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="6"
+        app:layout_row="5" />
+
+    <include
+        android:id="@+id/disc10"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="0"
+        app:layout_row="4" />
+
+    <include
+        android:id="@+id/disc11"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="1"
+        app:layout_row="4" />
+
+    <include
+        android:id="@+id/disc12"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="2"
+        app:layout_row="4" />
+
+    <include
+        android:id="@+id/disc13"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="3"
+        app:layout_row="4" />
+
+    <include
+        android:id="@+id/disc14"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="4"
+        app:layout_row="4" />
+
+    <include
+        android:id="@+id/disc15"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="5"
+        app:layout_row="4" />
+
+    <include
+        android:id="@+id/disc16"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="6"
+        app:layout_row="4" />
+
+    <include
+        android:id="@+id/disc20"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="0"
+        app:layout_row="3" />
+
+    <include
+        android:id="@+id/disc21"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="1"
+        app:layout_row="3" />
+
+    <include
+        android:id="@+id/disc22"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="2"
+        app:layout_row="3" />
+
+    <include
+        android:id="@+id/disc23"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="3"
+        app:layout_row="3" />
+
+    <include
+        android:id="@+id/disc24"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="4"
+        app:layout_row="3" />
+
+    <include
+        android:id="@+id/disc25"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="5"
+        app:layout_row="3" />
+
+    <include
+        android:id="@+id/disc26"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="6"
+        app:layout_row="3" />
+
+    <include
+        android:id="@+id/disc30"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="0"
+        app:layout_row="2" />
+
+    <include
+        android:id="@+id/disc31"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="1"
+        app:layout_row="2" />
+
+    <include
+        android:id="@+id/disc32"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="2"
+        app:layout_row="2" />
+
+    <include
+        android:id="@+id/disc33"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="3"
+        app:layout_row="2" />
+
+    <include
+        android:id="@+id/disc34"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="4"
+        app:layout_row="2" />
+
+    <include
+        android:id="@+id/disc35"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="5"
+        app:layout_row="2" />
+
+    <include
+        android:id="@+id/disc36"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="6"
+        app:layout_row="2" />
+
+    <include
+        android:id="@+id/disc40"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="0"
+        app:layout_row="1" />
+
+    <include
+        android:id="@+id/disc41"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="1"
+        app:layout_row="1" />
+
+    <include
+        android:id="@+id/disc42"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="2"
+        app:layout_row="1" />
+
+    <include
+        android:id="@+id/disc43"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="3"
+        app:layout_row="1" />
+
+    <include
+        android:id="@+id/disc44"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="4"
+        app:layout_row="1" />
+
+    <include
+        android:id="@+id/disc45"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="5"
+        app:layout_row="1" />
+
+    <include
+        android:id="@+id/disc46"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="6"
+        app:layout_row="1" />
+
+    <include
+        android:id="@+id/disc50"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="0"
+        app:layout_row="0" />
+
+    <include
+        android:id="@+id/disc51"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="1"
+        app:layout_row="0" />
+
+    <include
+        android:id="@+id/disc52"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="2"
+        app:layout_row="0" />
+
+    <include
+        android:id="@+id/disc53"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="3"
+        app:layout_row="0" />
+
+    <include
+        android:id="@+id/disc54"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="4"
+        app:layout_row="0" />
+
+    <include
+        android:id="@+id/disc55"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="5"
+        app:layout_row="0" />
+
+    <include
+        android:id="@+id/disc56"
+        layout="@layout/disc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_column="6"
+        app:layout_row="0" />
+
+<!--</merge>-->
+</androidx.gridlayout.widget.GridLayout>
