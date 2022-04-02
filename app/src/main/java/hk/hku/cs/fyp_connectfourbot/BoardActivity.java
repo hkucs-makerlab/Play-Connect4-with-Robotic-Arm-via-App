@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cppexample.CppActivity;
@@ -45,11 +46,11 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     private static final String FINISH_ACTIVITY_BROADCAST = BuildConfig.APPLICATION_ID + ".FINISH_ACTIVITY_BROADCAST";
     private LocalBroadcastManager localBroadcastManager;
     JavaCameraView javaCameraView;
-    TextView textView;
+//    TextView textView;
     TextView scoreView;
     TextView messageView;
     TextView turnView;
-    Button hintsText;
+    Button hintsButton;
     Mat mRGBA, mRGBAT;
     public int count = 10;
     public int turnCount = 1;
@@ -68,7 +69,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     public boolean initialReading = false;
 
     private CppActivity mCppActivity = new CppActivity();
-    private TextView HintsView;
+//    private TextView HintsView;
     public String sequence = "";
     public int playerCode;
     public String firstPlayer;
@@ -78,6 +79,23 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     private Timer mDataSendTimer = null;
     private static RobotArmGcode mRobotArmGcode = new RobotArmGcode();
     private static Queue<byte[]> mQueue = new LinkedList<>();
+
+    private final int[][] discID = {
+            {R.id.disc00, R.id.disc01, R.id.disc02, R.id.disc03, R.id.disc04, R.id.disc05, R.id.disc06},
+            {R.id.disc10, R.id.disc11, R.id.disc12, R.id.disc13, R.id.disc14, R.id.disc15, R.id.disc16},
+            {R.id.disc20, R.id.disc21, R.id.disc22, R.id.disc23, R.id.disc24, R.id.disc25, R.id.disc26},
+            {R.id.disc30, R.id.disc31, R.id.disc32, R.id.disc33, R.id.disc34, R.id.disc35, R.id.disc36},
+            {R.id.disc40, R.id.disc41, R.id.disc42, R.id.disc43, R.id.disc44, R.id.disc45, R.id.disc46},
+            {R.id.disc50, R.id.disc51, R.id.disc52, R.id.disc53, R.id.disc54, R.id.disc55, R.id.disc56}
+    };
+
+    private final int[] hintID = {R.id.hint0, R.id.hint1, R.id.hint2, R.id.hint3, R.id.hint4, R.id.hint5, R.id.hint6};
+
+    private ImageView[][] discImgView = new ImageView[6][7];
+    private ImageView[] hintImgView = new ImageView[7];
+    private ImageView turnImage;
+    private int humanColor;
+    private boolean useHint=false;
 
 
 
@@ -134,12 +152,13 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         setContentView(R.layout.activity_board);
         setContentView(R.layout.activity_board);
         mCppActivity.setNativeAssetManager(getAssets());
-        HintsView = findViewById(R.id.hintsView);
-        textView = findViewById(R.id.textView2);
-        hintsText = findViewById(R.id.hintsButton);
+//        HintsView = findViewById(R.id.hintsView);
+//        textView = findViewById(R.id.textView2);
+        hintsButton = findViewById(R.id.hintsButton);
         scoreView = findViewById(R.id.scoreView);
         messageView = findViewById(R.id.messageView);
         turnView = findViewById(R.id.turnView);
+        turnImage = findViewById(R.id.turnImage);
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         javaCameraView = (JavaCameraView) findViewById(R.id.cameraview1);
         javaCameraView.setVisibility(SurfaceView.VISIBLE);
@@ -173,13 +192,29 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         }
 
         for ( int r = 0; r < 6; r++) {
+            for (int c = 0; c < 7; c++) {
+                discImgView[r][c] = findViewById(discID[r][c]);
+            }
+        }
+        for (int c = 0; c < 7; c++) {
+            hintImgView[c] = findViewById(hintID[c]);
+        }
+
+        if (firstPlayer=="Robot"){
+            hintsButton.setEnabled(false);
+            turnImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_robot_120));
+            turnView.setText(firstPlayer+" takes the turn");
+        }
+
+
+/*        for ( int r = 0; r < 6; r++) {
             String tempRow = "";
             for (int c = 0; c < 7; c++) {
                 tempRow += "X ";
             }
             realStr += tempRow + "\n";
         }
-        updateText();
+        updateText();*/
 
         Thread t = new Thread() {
 
@@ -281,12 +316,23 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 //            Log.i(TAG, "player:"+firstPlayer);
             String tempStr = firstPlayer+" takes the turn";
             turnView.setText(tempStr);
+            if (firstPlayer=="Robot"){
+                turnImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_robot_120));
+            } else {
+                turnImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_face_120));
+            }
         }
         else if(order == 0){
 //            Log.i(TAG, "player:"+secondPlayer);
             String tempStr = secondPlayer+" takes the turn";
             turnView.setText(tempStr);
+            if (secondPlayer=="Robot"){
+                turnImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_robot_120));
+            } else {
+                turnImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_face_120));
+            }
         }
+
 
     }
 
@@ -309,15 +355,21 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
     public void showHints(View view){
 //        Log.d(TAG, "Sequence: "+sequence);
         String displayString = "";
+        useHint = true;
         for(int i = 0; i < bestMove.size(); i++){
             if(bestMove.get(i) == 1){
                 displayString += "O" + ",";
+                if (humanColor == 2)
+                    hintImgView[i].setImageDrawable(getResources().getDrawable(R.drawable.pink_disc));
+                else
+                    hintImgView[i].setImageDrawable(getResources().getDrawable(R.drawable.teal_disc));
             }
             else{
+                hintImgView[i].setImageDrawable(getResources().getDrawable(R.drawable.blank_disc));
                 displayString += "X" + ",";
             }
         }
-        HintsView.setText(displayString);
+//        HintsView.setText(displayString);
         ArrayList<Integer> scores = new ArrayList<>();
     }
 
@@ -350,9 +402,9 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
         }
     }
 
-    public void updateText(){
-        textView.setText(realStr);
-    }
+//    public void updateText(){
+//        textView.setText(realStr);
+//    }
 
     public void updateScore(int col, int row){
         int order = turnCount%2;
@@ -362,7 +414,9 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
             for (int i = 0; i < bestMove.size(); i++){
                 Log.i(TAG, String.valueOf("get:"+bestMove.get(i)+" col:"+col+"i:"+i));
                 if (bestMove.get(i) == 1 && col == 6 - i){
-                    playerScore += 5;
+                    if (!useHint){
+                        playerScore += 5;
+                    }
                     goodMove = true;
                 }
             }
@@ -389,16 +443,31 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                         tempCol.set(row, currentState.get(col).get(row));
                         preState.set(col, tempCol);
                         int colorCode = preState.get(col).get(row);
-                        Log.i(TAG, String.valueOf("Col:"+col+" Row:"+row));
-                        Log.i(TAG, String.valueOf("ColorCode:"+colorCode));
+                        Log.i(TAG, "updateSequence"+ String.valueOf("Col:"+col+" Row:"+row));
+                        Log.i(TAG, "updateSequence" + String.valueOf("ColorCode:"+colorCode));
                         sequence += String.valueOf(6-col+1);    //Update sequence
+
+                        if (turnCount%2 != playerCode){ // robot turn
+                            humanColor = 3 - colorCode; // opposite of robot color
+                        }
+
+                        if (turnCount%2 == playerCode){//if human player's turn
+                            humanColor = colorCode;
+                        }
+
+                        Log.i(TAG, "discImgView "+ String.valueOf(row+" "+col));
+                        if (colorCode==2){
+                            discImgView[row][6 - col].setImageDrawable(getResources().getDrawable(R.drawable.pink_disc));
+                        } else {
+                            discImgView[row][6 - col].setImageDrawable(getResources().getDrawable(R.drawable.teal_disc));
+                        }
 
 
                         updateScore(col, row);  //if human player's turn
                         checkWinning(6 - col, row, colorCode); //Flip vertically and horizontally
                         getBestMove();  //Get new best move
                         realStr = "";
-                        for ( int r = 5; r >= 0; r--) {
+                        /*for ( int r = 5; r >= 0; r--) {
                             String tempRow = "";
                             for (int c = 6; c >= 0; c--) {
                                 if (preState.get(c).get(r) == 1){
@@ -413,7 +482,7 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
                             }
                             realStr += tempRow + "\n";
                         }
-                        updateText();
+                        updateText();*/
                         turnCount++;
 
 
@@ -422,9 +491,16 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
 
                         if (turnCount%2 == playerCode){//if human player's turn
                             calAndDisplayMessage();
+                            useHint = false;
+                            hintsButton.setEnabled(true);
                         }
 
                         if (turnCount%2 != playerCode){ //if robot player's turn
+                            hintsButton.setEnabled(false);
+                            for(int i = 0; i < 7; i++){
+                                hintImgView[i].setImageDrawable(getResources().getDrawable(R.drawable.blank_disc));
+                            }
+
                             ArrayList<Integer> tempBestMove = new ArrayList<>();
                             if(bestMove.size() > 0){
                                 for(int i = 0; i < bestMove.size(); i++){

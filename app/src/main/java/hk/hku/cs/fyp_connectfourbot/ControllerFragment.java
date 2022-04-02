@@ -27,6 +27,7 @@ public class ControllerFragment extends Fragment implements
 
     private BluetoothConnect mBluetoothConnect;
     private Timer mDataSendTimer = null;
+    private RepeatListener mRepeatListener = new RepeatListener(400, 100,this);
 
 
 
@@ -73,14 +74,14 @@ public class ControllerFragment extends Fragment implements
         for (int i = 1; i < imageButtonID.length; i++) {
             ImageButton imgButton = rootView.findViewById(imageButtonID[i]);
             if (imgButton != null) {
-                imgButton.setOnClickListener(this);
+                imgButton.setOnTouchListener(mRepeatListener);
             }
             Log.e(LOG_TAG, "onCreateView()");
         }
         for (int i = 1; i < buttonID.length; i++) {
             Button button = rootView.findViewById(buttonID[i]);
             if (button != null) {
-                button.setOnClickListener(this);
+                button.setOnTouchListener(mRepeatListener);
             }
             Log.e(LOG_TAG, "onCreateView()");
         }
@@ -117,6 +118,8 @@ public class ControllerFragment extends Fragment implements
             Log.e(LOG_TAG, "onStop()");
     }
 
+
+
     @Override
     public void onClick(View view) {
         int buttonClicked = -1;
@@ -143,27 +146,27 @@ public class ControllerFragment extends Fragment implements
             switch (buttonClicked) {
                 case 1:
                     Log.e(LOG_TAG, "forwardButton");
-                    mQueue.add(mRobotArmGcode.moveY(20));
+                    mQueue.add(mRobotArmGcode.moveY(5));
                     break;
                 case 2:
                     Log.e(LOG_TAG, "backwardButton");
-                    mQueue.add(mRobotArmGcode.moveNY(20));
+                    mQueue.add(mRobotArmGcode.moveNY(5));
                     break;
                 case 3:
                     Log.e(LOG_TAG, "leftButton");
-                    mQueue.add(mRobotArmGcode.moveX(20));
+                    mQueue.add(mRobotArmGcode.moveX(5));
                     break;
                 case 4:
                     Log.e(LOG_TAG, "rightButton");
-                    mQueue.add(mRobotArmGcode.moveNX(20));
+                    mQueue.add(mRobotArmGcode.moveNX(5));
                     break;
                 case 5:
                     Log.e(LOG_TAG, "upButton");
-                    mQueue.add(mRobotArmGcode.moveZ(20));
+                    mQueue.add(mRobotArmGcode.moveZ(5));
                     break;
                 case 6:
                     Log.e(LOG_TAG, "downButton");
-                    mQueue.add(mRobotArmGcode.moveNZ(20));
+                    mQueue.add(mRobotArmGcode.moveNZ(5));
                     break;
                 case 7:
                     Log.e(LOG_TAG, "placeButton");

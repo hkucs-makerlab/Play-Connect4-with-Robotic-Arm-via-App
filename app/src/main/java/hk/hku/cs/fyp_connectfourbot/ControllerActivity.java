@@ -59,7 +59,6 @@ public class ControllerActivity extends AppCompatActivity implements
 
         stepperSwitch = (SwitchCompat) findViewById(R.id.stepperSwitch);
         stepperSwitch.setOnCheckedChangeListener(stepperListener);
-        stepperSwitch.setChecked(true);
 
         homeButton = (Button) findViewById(R.id.homeButton);
         homeButton.setOnClickListener(this);
@@ -76,6 +75,7 @@ public class ControllerActivity extends AppCompatActivity implements
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked) {
                 mQueue.add(mRobotArmGcode.setStepperOn());
+                mQueue.add(mRobotArmGcode.autoHome());
 //                Toast.makeText(getApplicationContext(), "Stepper On", Toast.LENGTH_SHORT).show();
             } else{
 //                Toast.makeText(getApplicationContext(), "Stepper Off", Toast.LENGTH_SHORT).show();

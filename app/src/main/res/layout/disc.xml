@@ -9,4 +9,4 @@
     android:padding="2dp"
     android:scaleType="fitCenter"
     app:srcCompat="@drawable/blank_disc"
-    tools:showIn="@layout/activity_board" />
+    tools:showIn="@layout/activity_board"/>

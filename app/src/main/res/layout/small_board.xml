@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?><!--<androidx.gridlayout.widget.GridLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginTop="16dp"
+    android:padding="4dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/cardView"
+    android:background="@drawable/game_end_card"
+    app:columnCount="7"
+    app:rowCount="6"
+    tools:showIn="@layout/activity_building">-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <ImageView
+        android:id="@+id/smallDisc00"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="0"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="5"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc01"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="1"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="5"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc02"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="2"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="5"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc03"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="3"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="5"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc04"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="4"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="5"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc05"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="5"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="5"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc06"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="6"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="5"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc10"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="0"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="4"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc11"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="1"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="4"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc12"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="2"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="4"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc13"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="3"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="4"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc14"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="4"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="4"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc15"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="5"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="4"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc16"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="6"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="4"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc20"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="0"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="3"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc21"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="1"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="3"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc22"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="2"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="3"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc23"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="3"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="3"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc24"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="4"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="3"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc25"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="5"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="3"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc26"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="6"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="3"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc30"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="0"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="2"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc31"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="1"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="2"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc32"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="2"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="2"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc33"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="3"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="2"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc34"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="4"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="2"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc35"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="5"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="2"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc36"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="6"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="2"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc40"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="0"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="1"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc41"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="1"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="1"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc42"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="2"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="1"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc43"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="3"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="1"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc44"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="4"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="1"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc45"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="5"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="1"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc46"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="6"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="1"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc50"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="0"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="0"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc51"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="1"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="0"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc52"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="2"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="0"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc53"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="3"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="0"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc54"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="4"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="0"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc55"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="5"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="0"
+        app:srcCompat="@drawable/blank_disc" />
+
+    <ImageView
+        android:id="@+id/smallDisc56"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_column="6"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_row="0"
+        app:srcCompat="@drawable/blank_disc" />
+
+</merge><!--
+</androidx.gridlayout.widget.GridLayout>-->

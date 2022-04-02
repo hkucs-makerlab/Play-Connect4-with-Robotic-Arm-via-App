@@ -21,33 +21,43 @@
         <activity android:name=".ScoreBoardActivity"
             android:label="Score Board"></activity>
         <activity android:name=".GameEndActivity"
+            android:screenOrientation="portrait"
             android:label="Game Ends" />
         <activity
             android:name=".SelectActivity"
+            android:screenOrientation="portrait"
             android:label="Select First Player" />
         <activity
             android:name=".DrawingActivity"
+            android:screenOrientation="portrait"
             android:label="Drawing Mode" />
         <activity
             android:name=".BuildingActivity"
+            android:screenOrientation="portrait"
             android:label="Building Mode" />
         <activity
             android:name=".ControllerActivity"
+            android:screenOrientation="portrait"
             android:label="Arm Controller" />
         <activity
             android:name=".ManualActivity"
+            android:screenOrientation="portrait"
             android:label="Manual Mode Activity" />
         <activity
             android:name=".AutoActivity"
+            android:screenOrientation="portrait"
             android:label="Finding GameBoard..." />
         <activity
             android:name=".BoardActivity"
+            android:screenOrientation="portrait"
             android:label="Let's Play" />
         <activity
             android:name="com.makerlab.ui.BluetoothDevListActivity"
+            android:screenOrientation="portrait"
             android:label="Scanning Bluetooth Devices" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Fyp_connectfourbot.NoActionBar">

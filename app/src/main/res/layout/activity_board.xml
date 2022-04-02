@@ -121,7 +121,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-                <TextView
+<!--                <TextView
                     android:id="@+id/hintsView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/hintsButton"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/include" />
+                    app:layout_constraintTop_toBottomOf="@+id/include" />-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/robotTalk"
             android:layout_width="match_parent"
@@ -181,8 +181,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="You can win in 20 moves!"
+                android:text="Welcome!"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textbubble"
@@ -212,14 +213,13 @@
                     android:id="@+id/turnView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
                     android:text="Human takes the turn"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toEndOf="@+id/turnImage"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.5" />
 
@@ -227,12 +227,10 @@
                     android:id="@+id/turnImage"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="24dp"
                     android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toStartOf="@+id/turnView"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -243,9 +241,7 @@
 
         <include
             android:id="@+id/include"
-            layout="@layout/board"
-            tools:layout_editor_absoluteX="27dp"
-            tools:layout_editor_absoluteY="150dp" />
+            layout="@layout/board" />
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/gridLayout2"
@@ -355,7 +351,7 @@
 
                 </androidx.gridlayout.widget.GridLayout>-->
 
-                <TextView
+<!--                <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -366,7 +362,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.8"
-                    tools:ignore="MissingConstraints" />
+                    tools:ignore="MissingConstraints" />-->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/currentScoreCardView"
@@ -404,6 +400,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
+                    android:fontFamily="sans-serif-medium"
                     android:text="Current Score:"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -414,6 +411,7 @@
                     android:id="@+id/scoreView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
                     android:text="0"
                     android:textSize="48sp"
                     android:textStyle="bold"
