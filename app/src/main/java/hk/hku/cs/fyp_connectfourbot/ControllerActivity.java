@@ -25,7 +25,9 @@ public class ControllerActivity extends AppCompatActivity implements
     static private String LOG_TAG = ControllerActivity.class.getSimpleName();
 
     SwitchCompat stepperSwitch;
-    Button homeButton, bottomButton, restButton, endStopButton;
+    Button homeButton, bottomButton, restButton, endStopButton, discButton;
+    Button col1Button, col2Button, col3Button, col4Button, col5Button, col6Button, col7Button;
+
 
     Queue<byte[]> mQueue = ControllerFragment.getmQueue();
     RobotArmGcode mRobotArmGcode = ControllerFragment.getmRobotArmGcode();
@@ -68,6 +70,23 @@ public class ControllerActivity extends AppCompatActivity implements
         restButton.setOnClickListener(this);
         endStopButton = (Button) findViewById(R.id.endStopButton);
         endStopButton.setOnClickListener(this);
+
+        discButton = (Button) findViewById(R.id.discButton);
+        discButton.setOnClickListener(this);
+        col1Button = (Button) findViewById(R.id.column1);
+        col1Button.setOnClickListener(this);
+        col2Button = (Button) findViewById(R.id.column2);
+        col2Button.setOnClickListener(this);
+        col3Button = (Button) findViewById(R.id.column3);
+        col3Button.setOnClickListener(this);
+        col4Button = (Button) findViewById(R.id.column4);
+        col4Button.setOnClickListener(this);
+        col5Button = (Button) findViewById(R.id.column5);
+        col5Button.setOnClickListener(this);
+        col6Button = (Button) findViewById(R.id.column6);
+        col6Button.setOnClickListener(this);
+        col7Button = (Button) findViewById(R.id.column7);
+        col7Button.setOnClickListener(this);
     }
 
     private CompoundButton.OnCheckedChangeListener stepperListener = new CompoundButton.OnCheckedChangeListener() {
@@ -101,6 +120,31 @@ public class ControllerActivity extends AppCompatActivity implements
         else if (view.getId() == R.id.endStopButton) {
 //            Toast.makeText(getApplicationContext(), "endStopButton", Toast.LENGTH_SHORT).show();
             mQueue.add(mRobotArmGcode.goEndStop());
+        }
+        else if (view.getId() == R.id.discButton) {
+            mQueue.add(mRobotArmGcode.goLeft()); //move left to be above stacker
+            mQueue.add(mRobotArmGcode.goDiscPos()); //move down to pick
+        }
+        else if (view.getId() == R.id.column1) {
+            mQueue.add(mRobotArmGcode.toCol(1));
+        }
+        else if (view.getId() == R.id.column2) {
+            mQueue.add(mRobotArmGcode.toCol(2));
+        }
+        else if (view.getId() == R.id.column3) {
+            mQueue.add(mRobotArmGcode.toCol(3));
+        }
+        else if (view.getId() == R.id.column4) {
+            mQueue.add(mRobotArmGcode.toCol(4));
+        }
+        else if (view.getId() == R.id.column5) {
+            mQueue.add(mRobotArmGcode.toCol(5));
+        }
+        else if (view.getId() == R.id.column6) {
+            mQueue.add(mRobotArmGcode.toCol(6));
+        }
+        else if (view.getId() == R.id.column7) {
+            mQueue.add(mRobotArmGcode.toCol(7));
         }
 
     }

@@ -10,75 +10,262 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4">
+        android:layout_weight="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/controllerTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Arm Controller"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.10" />
+<!--        <TextView-->
+<!--            android:id="@+id/controllerTitle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Arm Controller"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Display2"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
 
         <androidx.gridlayout.widget.GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:columnCount="2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/keypad"
+            app:columnCount="3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stepperSwitch"
+            app:layout_constraintTop_toBottomOf="@+id/stepperSwitchGrid"
             app:orientation="horizontal"
-            app:rowCount="2">
+            app:rowCount="4">
+
+            <Button
+                android:id="@+id/column1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Column 1"
+                android:textSize="16sp"
+                app:layout_column="0"
+                app:layout_columnWeight="1"
+                app:layout_row="0"
+                app:layout_rowWeight="1" />
+
+            <Button
+                android:id="@+id/column2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Column 2"
+                android:textSize="16sp"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                app:layout_row="0"
+                app:layout_rowWeight="1" />
+
+            <Button
+                android:id="@+id/column3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Column 3"
+                android:textSize="16sp"
+                app:layout_column="2"
+                app:layout_columnWeight="1"
+                app:layout_row="0"
+                app:layout_rowWeight="1" />
+
+            <Button
+                android:id="@+id/column4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Column 4"
+                android:textSize="16sp"
+                app:layout_column="0"
+                app:layout_columnWeight="1"
+                app:layout_row="1"
+                app:layout_rowWeight="1" />
+
+            <Button
+                android:id="@+id/column5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Column 5"
+                android:textSize="16sp"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                app:layout_row="1"
+                app:layout_rowWeight="1" />
+
+            <Button
+                android:id="@+id/column6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Column 6"
+                android:textSize="16sp"
+                app:layout_column="2"
+                app:layout_columnWeight="1"
+                app:layout_row="1"
+                app:layout_rowWeight="1" />
 
             <Button
                 android:id="@+id/homeButton"
-                android:layout_width="120dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Home" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Home"
+                android:textSize="16sp"
+                app:layout_column="0"
+                app:layout_columnWeight="1"
+                app:layout_row="2"
+                app:layout_rowWeight="1" />
+
+            <Button
+                android:id="@+id/column7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Column 7"
+                android:textSize="16sp"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                app:layout_row="2"
+                app:layout_rowWeight="1" />
+
+            <Button
+                android:id="@+id/discButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Disc"
+                android:textSize="16sp"
+                app:layout_column="2"
+                app:layout_columnWeight="1"
+                app:layout_row="2"
+                app:layout_rowWeight="1" />
 
             <Button
                 android:id="@+id/bottomButton"
-                android:layout_width="120dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Bottom" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Bottom"
+                android:textSize="16sp"
+                app:layout_column="0"
+                app:layout_columnWeight="1"
+                app:layout_row="3"
+                app:layout_rowWeight="1" />
 
             <Button
                 android:id="@+id/restButton"
-                android:layout_width="120dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Rest" />
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Rest"
+                android:textSize="16sp"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                app:layout_row="3"
+                app:layout_rowWeight="1" />
 
             <Button
                 android:id="@+id/endStopButton"
-                android:layout_width="120dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="End Stop" />
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="End Stop"
+                android:textSize="16sp"
+                app:layout_column="2"
+                app:layout_columnWeight="1"
+                app:layout_row="3"
+                app:layout_rowWeight="1" />
 
         </androidx.gridlayout.widget.GridLayout>
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/stepperSwitch"
-            android:layout_width="wrap_content"
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/stepperSwitchGrid"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:checked="true"
-            android:text="Stepper Power"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/keypad"
+            app:columnCount="1"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/controllerTitle"
-            app:switchPadding="16dp" />
+            app:orientation="horizontal"
+            app:rowCount="1">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/stepperSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="sans-serif"
+                android:text="Stepper Power"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="24sp"
+                app:layout_gravity="center"
+                app:switchMinWidth="70dp"
+                app:switchPadding="24dp" />
+        </androidx.gridlayout.widget.GridLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
