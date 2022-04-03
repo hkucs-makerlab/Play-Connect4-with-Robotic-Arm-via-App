@@ -2,10 +2,15 @@ package hk.hku.cs.fyp_connectfourbot;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,6 +23,26 @@ public class SelectActivity extends AppCompatActivity {
     private static RobotArmGcode mRobotArmGcode = new RobotArmGcode();
     AlertDialog.Builder builder;
 
+    static private String LOG_TAG = SelectActivity.class.getSimpleName();
+
+    // Receiver
+    private static final String FINISH_ACTIVITY_BROADCAST = BuildConfig.APPLICATION_ID + ".FINISH_ACTIVITY_BROADCAST";
+    private LocalBroadcastManager localBroadcastManager;
+
+    BroadcastReceiver FinishReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context arg0, Intent intent) {
+            String action = intent.getAction();
+            Log.e(LOG_TAG, "onReceiveFinishReceiver()");
+            Log.e(LOG_TAG, action);
+            if (action.equals(FINISH_ACTIVITY_BROADCAST)) {
+                Log.e(LOG_TAG, "it is FINISH_ACTIVITY_BROADCAST");
+//                Toast.makeText(getApplicationContext(), "finish me", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    };
+
 //    Button humanPlayer;
 //    Button robotPlayer;
     @Override
@@ -26,6 +51,7 @@ public class SelectActivity extends AppCompatActivity {
 //        robotPlayer = findViewById(R.id.robotButton);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
         builder = new AlertDialog.Builder(SelectActivity.this);
     }
 
@@ -49,11 +75,17 @@ public class SelectActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        localBroadcastManager.registerReceiver(FinishReceiver, new IntentFilter(FINISH_ACTIVITY_BROADCAST));
         MainActivity activity = MainActivity.getInstance();
         mBluetoothConnect = activity.getBluetoothConnect();
         if (mBluetoothConnect != null) {
             mBluetoothConnect.send(mRobotArmGcode.autoHome());
         }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        localBroadcastManager.unregisterReceiver(FinishReceiver);
     }
 
     @Override

@@ -108,6 +108,9 @@ public class BoardActivity extends AppCompatActivity implements CameraBridgeView
             if (action.equals(FINISH_ACTIVITY_BROADCAST)) {
                 Log.e(LOG_TAG, "it is FINISH_ACTIVITY_BROADCAST");
 //                Toast.makeText(getApplicationContext(), "finish me", Toast.LENGTH_SHORT).show();
+                Intent backIntent = new Intent(BoardActivity.this, MainActivity.class);
+                backIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(backIntent);
                 finish();
             }
         }

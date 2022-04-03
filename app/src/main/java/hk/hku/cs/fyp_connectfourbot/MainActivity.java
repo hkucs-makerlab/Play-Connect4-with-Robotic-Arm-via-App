@@ -480,12 +480,12 @@ public class MainActivity extends AppCompatActivity implements Runnable, Bluetoo
 //        MainActivityButton.setEnabled(true);
 
         MainActivityButton = findViewById(R.id.controller);
-//        MainActivityButton.setEnabled(flag);
-        MainActivityButton.setEnabled(true);
+        MainActivityButton.setEnabled(flag);
+//        MainActivityButton.setEnabled(true);
 
         MainActivityButton = findViewById(R.id.build);
-//        MainActivityButton.setEnabled(flag);
-        MainActivityButton.setEnabled(true);
+        MainActivityButton.setEnabled(flag);
+//        MainActivityButton.setEnabled(true);
     }
 
     public static MainActivity getInstance() {

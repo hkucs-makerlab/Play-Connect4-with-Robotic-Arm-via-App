@@ -27,7 +27,7 @@ public class ControllerFragment extends Fragment implements
 
     private BluetoothConnect mBluetoothConnect;
     private Timer mDataSendTimer = null;
-    private RepeatListener mRepeatListener = new RepeatListener(400, 100,this);
+    private RepeatListener mRepeatListener = new RepeatListener(500, 250,this);
 
 
 
@@ -154,11 +154,11 @@ public class ControllerFragment extends Fragment implements
                     break;
                 case 3:
                     Log.e(LOG_TAG, "leftButton");
-                    mQueue.add(mRobotArmGcode.moveX(5));
+                    mQueue.add(mRobotArmGcode.moveNX(5));
                     break;
                 case 4:
                     Log.e(LOG_TAG, "rightButton");
-                    mQueue.add(mRobotArmGcode.moveNX(5));
+                    mQueue.add(mRobotArmGcode.moveX(5));
                     break;
                 case 5:
                     Log.e(LOG_TAG, "upButton");

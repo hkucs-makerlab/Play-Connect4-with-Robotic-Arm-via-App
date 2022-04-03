@@ -33,7 +33,7 @@ public class BuildingActivity extends AppCompatActivity {
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
 
-    private static final long START_TIME_IN_MILLIS = 300000; //5minute
+    private static final long START_TIME_IN_MILLIS = 600000; //5minute
 //    private static final long START_TIME_IN_MILLIS = 10000; // for testing
     private long mTimeLeft = START_TIME_IN_MILLIS;
 

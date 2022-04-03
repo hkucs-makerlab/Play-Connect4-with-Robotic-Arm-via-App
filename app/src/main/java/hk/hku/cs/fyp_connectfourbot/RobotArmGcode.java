@@ -40,6 +40,7 @@ public class RobotArmGcode {
 
     static final double MINX = -200;
     static final double MAXX = 200;
+//    static final double MAXY = 325;
     static final double MINZ = -80;
     static final double MAXZ = 210;
 
@@ -68,7 +69,8 @@ public class RobotArmGcode {
 
     public byte[] moveY(int offset) {
         mPosY += offset;
-//        if (mPosY >MAXY){mPosY=MAXY;}
+        double MAXY = MAXZ - mPosZ + 255;
+        if (mPosY >MAXY){mPosY=MAXY;}
         return getPayload(G1 + " X" + mPosX + " Y" + mPosY + " Z" + mPosZ);
     }
     public byte[] moveNY(int offset) {
@@ -80,11 +82,15 @@ public class RobotArmGcode {
     public byte[] moveZ(int offset) {
         mPosZ += offset;
         if (mPosZ >MAXZ){mPosZ=MAXZ;}
+        double MAXY = MAXZ - mPosZ + 255;
+        if (mPosY >MAXY){mPosY=MAXY;}
         return getPayload(G1 + " X" + mPosX + " Y" + mPosY + " Z" + mPosZ);
     }
     public byte[] moveNZ(int offset) {
         mPosZ -= offset;
         if (mPosZ <MINZ){mPosZ=MINZ;}
+        double MAXY = MAXZ - mPosZ + 255;
+        if (mPosY >MAXY){mPosY=MAXY;}
         return getPayload(G1 + " X" + mPosX + " Y" + mPosY + " Z" + mPosZ);
     }
 

@@ -1,6 +1,9 @@
 package hk.hku.cs.fyp_connectfourbot;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -22,6 +25,7 @@ import android.widget.Switch;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 //import androidx.camera.core.ImageProxy;
 //
 //import org.pytorch.IValue;
@@ -64,6 +68,29 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
     public int player;
     Button refresh;
 
+    static private String LOG_TAG = AutoActivity.class.getSimpleName();
+
+    // Receiver
+    private static final String FINISH_ACTIVITY_BROADCAST = BuildConfig.APPLICATION_ID + ".FINISH_ACTIVITY_BROADCAST";
+    private LocalBroadcastManager localBroadcastManager;
+
+    BroadcastReceiver FinishReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context arg0, Intent intent) {
+            String action = intent.getAction();
+            Log.e(LOG_TAG, "onReceiveFinishReceiver()");
+            Log.e(LOG_TAG, action);
+            if (action.equals(FINISH_ACTIVITY_BROADCAST)) {
+                Log.e(LOG_TAG, "it is FINISH_ACTIVITY_BROADCAST");
+//                Toast.makeText(getApplicationContext(), "finish me", Toast.LENGTH_SHORT).show();
+//                Intent backIntent = new Intent(AutoActivity.this, MainActivity.class);
+//                backIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(backIntent);
+                finish();
+            }
+        }
+    };
+
 
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -99,6 +126,9 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auto);
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+
         player = getIntent().getIntExtra("player", 0);
 //        Log.d(TAG, player);
 
@@ -329,6 +359,18 @@ public class AutoActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        localBroadcastManager.registerReceiver(FinishReceiver, new IntentFilter(FINISH_ACTIVITY_BROADCAST));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        localBroadcastManager.unregisterReceiver(FinishReceiver);
     }
 
     @Override
