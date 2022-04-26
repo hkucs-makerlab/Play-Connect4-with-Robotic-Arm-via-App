@@ -4,4 +4,4 @@
 Contributors: Alan and Benny
 
 ## Introduction Video
-[![Watch the video](https://img.youtube.com/vi/3MSrORcmxQQ/maxresdefault.jpg)](https://youtu.be/3MSrORcmxQQ)
+[![Watch the video](https://wp.cs.hku.hk/2021/fyp21049/wp-content/uploads/sites/213/thumbnail.jpg)](https://youtu.be/3MSrORcmxQQ)
