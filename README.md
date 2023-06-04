@@ -17,6 +17,7 @@ Team member: **Ka Ngai WONG, Benny | Tsun Wai WAN, Alan**
 
 [Innoshow Project Page](https://innoacademy.engg.hku.hk/pick-and-place/)
 
+[Robot Arm Firmware](https://github.com/bennywong3/robotic-arm-arduino)
 
 ## Abstract
 AI versus human players in games has been an increasingly popular topic, especially after the victory of AlphaGo. This project aims at **developing a Connect Four AI for STEM education that utilizes a mobile application and a robotic arm to play with human opponents**. In order to accomplish the objective, multiple software and hardware tools and methods were employed to design the system workflow of the Android application. Furthermore, experiments were conducted to select the best approaches. Based on the results, **computer vision with OpenCV circle and color detection was used to recognize the board, and an optimized minimax algorithm with Alpha-Beta pruning was implemented to calculate the next best move**. With the completed product, players have an advanced Connect Four gaming experience by playing against the perfect AI, which can be utilized in STEM education by demonstrating the strength of AI in making decisions and recognizing objects. However, with the limitations in the application and robotic arm, the product can further be improved to enhance usability and gaming experience in the future.
